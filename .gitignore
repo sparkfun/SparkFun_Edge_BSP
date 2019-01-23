@@ -66,6 +66,11 @@ pack
 third_party
 tools
 utils
+boards/apollo1_evb
+boards/apollo2_blue_evb
+boards/apollo2_evb
+boards/apollo2_blue
+boards/apollo3_evb
 
 # IDE stuff
 .vscode

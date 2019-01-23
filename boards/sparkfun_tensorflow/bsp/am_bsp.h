@@ -85,7 +85,7 @@ extern "C"
 // Button definitions.
 //
 //*****************************************************************************
-#define AM_BSP_NUM_BUTTONS                  3
+#define AM_BSP_NUM_BUTTONS                  1
 extern am_devices_button_t am_bsp_psButtons[AM_BSP_NUM_BUTTONS];
 
 //*****************************************************************************
@@ -93,7 +93,7 @@ extern am_devices_button_t am_bsp_psButtons[AM_BSP_NUM_BUTTONS];
 // LED definitions.
 //
 //*****************************************************************************
-#define AM_BSP_NUM_LEDS                   5
+#define AM_BSP_NUM_LEDS                   4
 extern am_devices_led_t am_bsp_psLEDs[AM_BSP_NUM_LEDS];
 
 //*****************************************************************************

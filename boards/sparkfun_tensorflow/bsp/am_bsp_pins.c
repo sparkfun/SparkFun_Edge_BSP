@@ -66,36 +66,12 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_BUTTON0 =
 
 //*****************************************************************************
 //
-//  BUTTON1 pin: Labeled BTN3 on the Apollo3 EVB.
-//
-//*****************************************************************************
-const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_BUTTON1 =
-{
-    .uFuncSel            = AM_HAL_PIN_18_GPIO,
-    .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA,
-    .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE
-};
-
-//*****************************************************************************
-//
-//  BUTTON2 pin: Labeled BTN4 on the Apollo3 EVB.
-//
-//*****************************************************************************
-const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_BUTTON2 =
-{
-    .uFuncSel            = AM_HAL_PIN_19_GPIO,
-    .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA,
-    .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE
-};
-
-//*****************************************************************************
-//
 //  LED0 pin: The LED at the most interior location.
 //
 //*****************************************************************************
 const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_LED0 =
 {
-    .uFuncSel            = AM_HAL_PIN_10_GPIO,
+    .uFuncSel            = AM_HAL_PIN_46_GPIO,
     .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
 };
 
@@ -106,7 +82,7 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_LED0 =
 //*****************************************************************************
 const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_LED1 =
 {
-    .uFuncSel            = AM_HAL_PIN_30_GPIO,
+    .uFuncSel            = AM_HAL_PIN_37_GPIO,
     .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
 };
 
@@ -117,7 +93,7 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_LED1 =
 //*****************************************************************************
 const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_LED2 =
 {
-    .uFuncSel            = AM_HAL_PIN_15_GPIO,
+    .uFuncSel            = AM_HAL_PIN_44_GPIO,
     .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
 };
 
@@ -128,18 +104,7 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_LED2 =
 //*****************************************************************************
 const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_LED3 =
 {
-    .uFuncSel            = AM_HAL_PIN_14_GPIO,
-    .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
-};
-
-//*****************************************************************************
-//
-//  LED4 pin: The LED nearest the end of the board.
-//
-//*****************************************************************************
-const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_LED4 =
-{
-    .uFuncSel            = AM_HAL_PIN_17_GPIO,
+    .uFuncSel            = AM_HAL_PIN_47_GPIO,
     .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
 };
 
@@ -150,7 +115,7 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_LED4 =
 //*****************************************************************************
 const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_COM_UART_TX =
 {
-    .uFuncSel            = AM_HAL_PIN_22_UART0TX,
+    .uFuncSel            = AM_HAL_PIN_48_UART0TX,
     .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
 };
 
@@ -161,28 +126,7 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_COM_UART_TX =
 //*****************************************************************************
 const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_COM_UART_RX =
 {
-    .uFuncSel            = AM_HAL_PIN_23_UART0RX
-};
-
-//*****************************************************************************
-//
-//  COM_UART_CTS pin.
-//
-//*****************************************************************************
-const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_COM_UART_CTS =
-{
-    .uFuncSel            = AM_HAL_PIN_38_UART0CTS
-};
-
-//*****************************************************************************
-//
-//  COM_UART_RTS pin.
-//
-//*****************************************************************************
-const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_COM_UART_RTS =
-{
-    .uFuncSel            = AM_HAL_PIN_37_UART0RTS,
-    .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
+    .uFuncSel            = AM_HAL_PIN_49_UART0RX
 };
 
 //*****************************************************************************
@@ -951,7 +895,7 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_SDA =
 //*****************************************************************************
 const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_ITM_SWO =
 {
-    .uFuncSel            = AM_HAL_PIN_41_SWO,
+    .uFuncSel            = AM_HAL_PIN_33_SWO,
     .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
 };
 

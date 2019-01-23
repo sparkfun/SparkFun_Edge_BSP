@@ -67,31 +67,15 @@ extern "C"
 //  BUTTON0 pin: Labeled BTN2 on the Apollo3 EVB.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_BUTTON0             16
+#define AM_BSP_GPIO_BUTTON0             14
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_BUTTON0;
-
-//*****************************************************************************
-//
-//  BUTTON1 pin: Labeled BTN3 on the Apollo3 EVB.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_BUTTON1             18
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_BUTTON1;
-
-//*****************************************************************************
-//
-//  BUTTON2 pin: Labeled BTN4 on the Apollo3 EVB.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_BUTTON2             19
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_BUTTON2;
 
 //*****************************************************************************
 //
 //  LED0 pin: The LED at the most interior location.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_LED0                10
+#define AM_BSP_GPIO_LED0                46
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED0;
 
 //*****************************************************************************
@@ -99,7 +83,7 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED0;
 //  LED1 pin.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_LED1                30
+#define AM_BSP_GPIO_LED1                37
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED1;
 
 //*****************************************************************************
@@ -107,7 +91,7 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED1;
 //  LED2 pin.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_LED2                15
+#define AM_BSP_GPIO_LED2                44
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED2;
 
 //*****************************************************************************
@@ -115,23 +99,15 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED2;
 //  LED3 pin.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_LED3                14
+#define AM_BSP_GPIO_LED3                47
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED3;
-
-//*****************************************************************************
-//
-//  LED4 pin: The LED nearest the end of the board.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_LED4                17
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED4;
 
 //*****************************************************************************
 //
 //  COM_UART_TX pin: This pin is the COM_UART transmit pin.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_COM_UART_TX         22
+#define AM_BSP_GPIO_COM_UART_TX         48
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_COM_UART_TX;
 
 //*****************************************************************************
@@ -139,24 +115,8 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_COM_UART_TX;
 //  COM_UART_RX pin: This pin is the COM_UART receive pin.
 //
 //*****************************************************************************
-#define AM_BSP_GPIO_COM_UART_RX         23
+#define AM_BSP_GPIO_COM_UART_RX         49
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_COM_UART_RX;
-
-//*****************************************************************************
-//
-//  COM_UART_CTS pin.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_COM_UART_CTS        38
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_COM_UART_CTS;
-
-//*****************************************************************************
-//
-//  COM_UART_RTS pin.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_COM_UART_RTS        37
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_COM_UART_RTS;
 
 //*****************************************************************************
 //
