@@ -50,3 +50,22 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Default SDK files/directories
+AM-BSD-EULA.txt
+CMSIS
+Makefile
+VERSION.txt
+ambiq_ble
+bootloader
+devices
+docs
+makedefs
+mcu
+pack
+third_party
+tools
+utils
+
+# IDE stuff
+.vscode
