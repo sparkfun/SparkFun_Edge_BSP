@@ -125,6 +125,19 @@ extern am_devices_led_t am_bsp_psLEDs[AM_BSP_NUM_LEDS];
 
 //*****************************************************************************
 //
+// I2C definitions.
+//
+//*****************************************************************************
+#define AM_BSP_I2C_ACCELEROMETER_IOM        3
+#define AM_BSP_I2C_ACCELEROMETER_ADDRESS    0x19
+#define AM_BSP_I2C_ACCELEROMETER_SDA_PIN    AM_BSP_GPIO_IOM3_SDA
+#define AM_BSP_I2C_ACCELEROMETER_SCL_PIN    AM_BSP_GPIO_IOM3_SCL
+
+#define AM_BSP_I2C_QWIIC_ADDRESS            0x77 // BME280
+#define AM_BSP_I2C_QWIIC_IOM                4
+
+//*****************************************************************************
+//
 //! Structure containing UART configuration information while it is powered down.
 //
 //*****************************************************************************
