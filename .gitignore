@@ -54,7 +54,6 @@ dkms.conf
 # Default SDK files/directories
 AM-BSD-EULA.txt
 CMSIS
-Makefile
 VERSION.txt
 ambiq_ble
 bootloader
