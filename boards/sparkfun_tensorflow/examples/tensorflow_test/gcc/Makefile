@@ -97,8 +97,12 @@ INCLUDES+= -I../../../../..
 INCLUDES+= -I../../../../../utils
 INCLUDES+= -I../src
 INCLUDES+= -I../../../../../devices
+INCLUDES+= -I../src/tf_adc
+INCLUDES+= -I../src/tf_accelerometer
 
 VPATH = ../src
+VPATH+= ../src/tf_adc
+VPATH+= ../src/tf_accelerometer
 VPATH+=:../../../../../devices
 VPATH+=:../../../../../utils
 
@@ -108,6 +112,8 @@ SRC += am_util_delay.c
 SRC += am_util_faultisr.c
 SRC += am_util_stdio.c
 SRC += startup_gcc.c
+SRC += tf_adc.c
+SRC += tf_accelerometer.c
 
 CSRC = $(filter %.c,$(SRC))
 ASRC = $(filter %.s,$(SRC))
@@ -181,12 +187,12 @@ $(CONFIG)/%.d: ;
 ../../../../../mcu/apollo3/hal/gcc/bin/libam_hal.a:
 	$(MAKE) -C ../../../../../mcu/apollo3/hal
 
-# Automatically include any generated dependencies
--include $(DEPS)
-endif
-.PHONY: all clean directories
-
 bootload: all
 	../../../../../tools/apollo3_scripts/create_cust_image_blob.py --bin $(CONFIG)/$(TARGET).bin --load-address 0xC000 --magic-num 0xCB -o $(CONFIG)/main_nonsecure_ota --version 0x0
 	../../../../../tools/apollo3_scripts/create_cust_wireupdate_blob.py --load-address 0x20000 --bin $(CONFIG)/main_nonsecure_ota.bin -i 6 -o $(CONFIG)/main_nonsecure_wire --options 0x1
 	../../../../../tools/apollo3_scripts/uart_wired_update.py -b 115200 $(SERIAL_PORT) -r 1 -f $(CONFIG)/main_nonsecure_wire.bin -i 6
+
+# Automatically include any generated dependencies
+-include $(DEPS)
+endif
+.PHONY: all clean directories
