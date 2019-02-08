@@ -49,7 +49,7 @@ SHELL:=/bin/bash
 # Here are some user modifiable settings. Note that leading spaces are used to separate strings when appending to a variable
 COM_PORT			 = COM4
 SDKPATH				 = # Note that if you copy/paste a windows file path here you need to change backslashes to forward slashes
-BOARDPATH			 = ${SDKPATH}/boards/SparkFun_Edge_AmbiqSDK_BSP
+BOARDPATH			 = ${SDKPATH}/boards/SparkFun_TensorFlow_Apollo3_BSP# One day I hope to rename the BSP folder to: SparkFun_Edge_AmbiqSDK_BSP
 
 USER_INCLUDE_DIRS	 = -I../src/inc1
 USER_INCLUDE_DIRS	+= -I../src/inc2
