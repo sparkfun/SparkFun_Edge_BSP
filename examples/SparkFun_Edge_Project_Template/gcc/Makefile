@@ -39,14 +39,14 @@
 # Modifications by Owen Lyke, SparkFun Electronics, February 2019
 #
 #******************************************************************************
-TARGET := SparkFun_Edge_Project_Template# this name is the name of the resulting binary file
 COMPILERNAME := gcc
-PROJECT := SparkFun_Edge_Project_Template_gcc
 CONFIG := bin
-
 SHELL:=/bin/bash
 
 # Here are some user modifiable settings. Note that leading spaces are used to separate strings when appending to a variable
+TARGET := SparkFun_Edge_Project_Template# this name is the name of the resulting binary file
+PROJECT := SparkFun_Edge_Project_Template_gcc
+
 COM_PORT			 = COM4
 SDKPATH				 = # Note that if you copy/paste a windows file path here you need to change backslashes to forward slashes
 BOARDPATH			 = ${SDKPATH}/boards/SparkFun_TensorFlow_Apollo3_BSP# One day I hope to rename the BSP folder to: SparkFun_Edge_AmbiqSDK_BSP
