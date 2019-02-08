@@ -6968,7 +6968,7 @@ int32_t lis2dh12_device_id_get(lis2dh12_ctx_t *ctx, uint8_t *buff)
     fbe4:	74736554 	.word	0x74736554
     fbe8:	0000000a 	.word	0x0000000a
     fbec:	353a3331 	.word	0x353a3331
-    fbf0:	38313a32 	.word	0x38313a32
+    fbf0:	37303a35 	.word	0x37303a35
     fbf4:	00000000 	.word	0x00000000
     fbf8:	20626546 	.word	0x20626546
     fbfc:	32203820 	.word	0x32203820
