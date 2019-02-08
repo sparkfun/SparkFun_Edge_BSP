@@ -56,6 +56,12 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+
+
+# IDE stuff
+.vscode
+
+
 # Default SDK files/directories
 AM-BSD-EULA.txt
 CMSIS
@@ -68,13 +74,10 @@ makedefs
 mcu
 pack
 third_party
-tools
+#tools
 utils
 boards/apollo1_evb
 boards/apollo2_blue_evb
 boards/apollo2_evb
 boards/apollo2_blue
 boards/apollo3_evb
-
-# IDE stuff
-.vscode
