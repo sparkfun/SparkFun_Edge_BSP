@@ -14,11 +14,14 @@
 #include "tf_adc.h"
 #include "tf_accelerometer.h"
 
-static int boardSetup(void);
-static int testADC(void);
+static int  boardSetup(void);
+static void boardTeardown(void);
+static int  testADC(void);
 
 axis3bit16_t data_raw_acceleration;
+axis1bit16_t data_raw_temperature;
 float acceleration_mg[3];
+float temperature_degC;
 
 //*****************************************************************************
 //
@@ -33,7 +36,7 @@ int main(void)
 
     am_util_stdio_printf("SparkFun Edge Board Test\n");
     am_util_stdio_printf("Compiled on %s, %s\n\n", __DATE__, __TIME__);
-    am_util_stdio_printf("SparkFun Tensorflow Debug Output (SWO)\r\n");
+    am_util_stdio_printf("SparkFun Tensorflow Debug Output (UART)\r\n");
     am_bsp_uart_string_print("Hello, UART!\r\n");
 
     int accInitRes = initAccelerometer();
@@ -47,6 +50,11 @@ int main(void)
     */
     while(1)
     {
+        // Use Button 14 to break the loop and shut down
+        uint32_t pin14Val = 1; 
+        am_hal_gpio_state_read( AM_BSP_GPIO_14, AM_HAL_GPIO_INPUT_READ, &pin14Val);
+        if( pin14Val == 0 ){ break; }
+
         lis2dh12_reg_t reg;
 
         /*
@@ -65,23 +73,23 @@ int main(void)
             acceleration_mg[2] =
             lis2dh12_from_fs2_hr_to_mg(data_raw_acceleration.i16bit[2]);
             
-            am_util_stdio_printf("%04.2f, %04.2f, %04.2f, %04.2f\r\n",
-                    acceleration_mg[0], acceleration_mg[1], acceleration_mg[2], ((float)audioSample/16));
+            am_util_stdio_printf("Acc [mg] %04.2f x, %04.2f y, %04.2f z, Temp [deg C] %04.2f, MIC0 [counts / 2^14] %d\r\n",
+                    acceleration_mg[0], acceleration_mg[1], acceleration_mg[2], temperature_degC, (audioSample) );
         }
 
-        // lis2dh12_temp_data_ready_get(&dev_ctx, &reg.byte);      
-        // if (reg.byte)    
-        // {
-        //     /* Read temperature data */
-        //     memset(data_raw_temperature.u8bit, 0x00, sizeof(int16_t));
-        //     lis2dh12_temperature_raw_get(&dev_ctx, data_raw_temperature.u8bit);
-        //     temperature_degC =
-        //     lis2dh12_from_lsb_hr_to_celsius(data_raw_temperature.i16bit);
-            
-        //     am_util_stdio_printf("Temperature [degC]:%6.2f\r\n", temperature_degC);
-        // }
+        lis2dh12_temp_data_ready_get(&dev_ctx, &reg.byte);      
+        if (reg.byte)    
+        {
+            /* Read temperature data */
+            memset(data_raw_temperature.u8bit, 0x00, sizeof(int16_t));
+            lis2dh12_temperature_raw_get(&dev_ctx, data_raw_temperature.u8bit);
+            temperature_degC =
+            lis2dh12_from_lsb_hr_to_celsius(data_raw_temperature.i16bit);
+        }
     }
 
+    // Turn off leds
+    boardTeardown();
 
     // Disable debug
     am_bsp_debug_printf_disable();
@@ -122,6 +130,15 @@ static int boardSetup(void)
     am_hal_gpio_output_set(AM_BSP_GPIO_LED_YELLOW);
 
     return 0;
+}
+
+static void boardTeardown(void)
+{
+    // Lights out
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_RED);
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_BLUE);
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_GREEN);
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_YELLOW);
 }
 
 static int testADC(void)
