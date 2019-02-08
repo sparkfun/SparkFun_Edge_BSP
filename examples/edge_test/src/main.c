@@ -1,8 +1,8 @@
 //*****************************************************************************
 //
-//! @file blank_slate.c
+//! @file main.c
 //!
-//! @brief Example that turns LEDs on, prints debug message, and waits
+//! @brief Edge Test is an example to demonstrate the built-in hardware on the Edge board
 //!
 //! SWO is configured in 2M baud, 8-n-1 mode.
 //
