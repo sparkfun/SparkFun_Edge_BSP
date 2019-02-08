@@ -37,9 +37,9 @@
 # This is part of revision v2.0.0 of the AmbiqSuite Development Package.
 #
 #******************************************************************************
-TARGET := tensorflow_test
+TARGET := edge_test
 COMPILERNAME := gcc
-PROJECT := tensorflow_test_gcc
+PROJECT := edge_test_gcc
 CONFIG := bin
 
 SHELL:=/bin/bash
