@@ -81,3 +81,6 @@ boards/apollo2_blue_evb
 boards/apollo2_evb
 boards/apollo2_blue
 boards/apollo3_evb
+
+# Python cache for imported defines module
+__pycache__
