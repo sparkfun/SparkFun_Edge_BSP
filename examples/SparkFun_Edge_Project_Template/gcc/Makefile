@@ -41,7 +41,7 @@
 #******************************************************************************
 TARGET := SparkFun_Edge_Project_Template# this name is the name of the resulting binary file
 COMPILERNAME := gcc
-PROJECT := SparkFun_Edge_Project_Template
+PROJECT := SparkFun_Edge_Project_Template_gcc
 CONFIG := bin
 
 SHELL:=/bin/bash
