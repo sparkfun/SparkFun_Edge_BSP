@@ -45,7 +45,7 @@ CONFIG := bin
 SHELL:=/bin/bash
 
 #### Bootloader Configuration
-SERIAL_PORT ?= COM4
+SERIAL_PORT ?= COM4# Or perhaps a Unix-like machine might put '/dev/cu.usbserial-1410' 
 
 #### Setup ####
 
