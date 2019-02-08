@@ -1,3 +1,6 @@
+# Compile artifacts
+*.axf
+
 # Prerequisites
 *.d
 
