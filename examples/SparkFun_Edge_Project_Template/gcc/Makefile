@@ -39,16 +39,16 @@
 # Modifications by Owen Lyke, SparkFun Electronics, February 2019
 #
 #******************************************************************************
-TARGET := tensorflow_test
+TARGET := SparkFun_Edge_Project_Template# this name is the name of the resulting binary file
 COMPILERNAME := gcc
-PROJECT := tensorflow_test_gcc
+PROJECT := SparkFun_Edge_Project_Template
 CONFIG := bin
 
 SHELL:=/bin/bash
 
 # Here are some user modifiable settings. Note that leading spaces are used to separate strings when appending to a variable
 COM_PORT			 = COM4
-SDKPATH				 = 
+SDKPATH				 = # Note that if you copy/paste a windows file path here you need to change backslashes to forward slashes
 BOARDPATH			 = ${SDKPATH}/boards/SparkFun_Edge_AmbiqSDK_BSP
 
 USER_INCLUDE_DIRS	 = -I../src/inc1
