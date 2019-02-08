@@ -1,6 +1,7 @@
 # Compile artifacts
 *.axf
 *.bin
+*.lst
 
 # Prerequisites
 *.d
