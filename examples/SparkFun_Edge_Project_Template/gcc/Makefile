@@ -39,9 +39,6 @@
 # Modifications by Owen Lyke, SparkFun Electronics, February 2019
 #
 #******************************************************************************
-COMPILERNAME := gcc
-CONFIG := bin
-SHELL:=/bin/bash
 
 # Here are some user modifiable settings. Note that leading spaces are used to separate strings when appending to a variable
 TARGET := SparkFun_Edge_Project_Template# this name is the name of the resulting binary file
@@ -67,6 +64,9 @@ USER_SOURCE_FILES	+= inc2.c
 SERIAL_PORT ?= ${COM_PORT} # This can be overridden in another file
 
 #### Setup ####
+COMPILERNAME := gcc
+CONFIG := bin
+SHELL:=/bin/bash
 
 TOOLCHAIN ?= arm-none-eabi
 PART = apollo3
