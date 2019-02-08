@@ -48,7 +48,7 @@ SHELL:=/bin/bash
 
 # Here are some user modifiable settings. Note that leading spaces are used to separate strings when appending to a variable
 COM_PORT			 = COM4
-SDKPATH				 = C:/Users/owen.lyke/AppData/Roaming/AmbiqSDK/AmbiqSuite-Rel2.0.0
+SDKPATH				 = 
 BOARDPATH			 = ${SDKPATH}/boards/SparkFun_Edge_AmbiqSDK_BSP
 
 USER_INCLUDE_DIRS	 = -I../src/inc1
