@@ -3,7 +3,7 @@ BSP and examples to integrate the SparkFun TensorFlow board with the AmbiqSuite
 
 ## Installation
 
-Clone or download and extract this repo into the ```SDK/boards/``` directory. 
+Clone, download and extract, or symlink this repo into the ```SDK/boards/``` directory. 
 
 ## Examples
 This repo contains two example projects. 
