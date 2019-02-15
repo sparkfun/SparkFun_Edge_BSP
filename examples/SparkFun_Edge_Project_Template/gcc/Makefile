@@ -45,8 +45,9 @@ TARGET := SparkFun_Edge_Project_Template# this name is the name of the resulting
 PROJECT := SparkFun_Edge_Project_Template_gcc
 
 COM_PORT			 = COM4
-SDKPATH				 = # Note that if you copy/paste a windows file path here you need to change backslashes to forward slashes
+SDKPATH				 = ${HOME}/projects/AmbiqSuite-Rel2.0.0
 BOARDPATH			 = ${SDKPATH}/boards/SparkFun_TensorFlow_Apollo3_BSP# One day I hope to rename the BSP folder to: SparkFun_Edge_AmbiqSDK_BSP
+FAMILY                           = apollo3
 
 USER_INCLUDE_DIRS	 = -I../src/inc1
 USER_INCLUDE_DIRS	+= -I../src/inc2
@@ -176,20 +177,20 @@ $(CONFIG):
 	@mkdir -p $@
 
 $(CONFIG)/%.o: %.c $(CONFIG)/%.d
-	@echo " Compiling $(COMPILERNAME) $<" ;\
+	@echo " Compiling $(COMPILERNAME) $<"
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(CONFIG)/%.o: %.s $(CONFIG)/%.d
-	@echo " Assembling $(COMPILERNAME) $<" ;\
+	@echo " Assembling $(COMPILERNAME) $<"
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(CONFIG)/$(TARGET).axf: $(OBJS) $(LIBS)
-	@echo " Linking $(COMPILERNAME) $@" ;\
+	@echo " Linking $(COMPILERNAME) $@"
 	$(CC) -Wl,-T,$(LINKER_FILE) -o $@ $(OBJS) $(LFLAGS)
 
 $(CONFIG)/$(TARGET).bin: $(CONFIG)/$(TARGET).axf
-	@echo " Copying $(COMPILERNAME) $@..." ;\
-	$(CP) $(CPFLAGS) $< $@ ;\
+	@echo " Copying $(COMPILERNAME) $@..."
+	$(CP) $(CPFLAGS) $< $@
 	$(OD) $(ODFLAGS) $< > $(CONFIG)/$(TARGET).lst
 
 clean:
@@ -201,10 +202,10 @@ clean:
 $(CONFIG)/%.d: ;
 
 ${BOARDPATH}/bsp/gcc/bin/libam_bsp.a:
-	$(MAKE) -C ${BOARDPATH}/bsp
+	$(MAKE) -C ${BOARDPATH}/bsp/gcc
 
 ${SDKPATH}/mcu/apollo3/hal/gcc/bin/libam_hal.a:
-	$(MAKE) -C ${SDKPATH}/mcu/apollo3/hal
+	$(MAKE) -C ${SDKPATH}/mcu/apollo3/hal/gcc
 
 bootload: all
 	${SDKPATH}/tools/apollo3_scripts/create_cust_image_blob.py --bin $(CONFIG)/$(TARGET).bin --load-address 0xC000 --magic-num 0xCB -o $(CONFIG)/main_nonsecure_ota --version 0x0
