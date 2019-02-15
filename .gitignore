@@ -1,16 +1,16 @@
-# Compile artifacts
-*.axf
-*.bin
-*.lst
+# # Compile artifacts
+# *.axf
+# *.bin
+# *.lst
 
-# Prerequisites
-*.d
+# # Prerequisites
+# *.d
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# # Object files
+# *.o
+# *.ko
+# *.obj
+# *.elf
 
 # Linker output
 *.ilk
