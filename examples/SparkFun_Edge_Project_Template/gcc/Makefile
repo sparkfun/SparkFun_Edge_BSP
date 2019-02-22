@@ -46,7 +46,7 @@ PROJECT := SparkFun_Edge_Project_Template_gcc
 
 COM_PORT			 = COM4
 SDKPATH				 = # Note that if you copy/paste a windows file path here you need to change backslashes to forward slashes
-BOARDPATH			 = ${SDKPATH}/boards/SparkFun_TensorFlow_Apollo3_BSP# One day I hope to rename the BSP folder to: SparkFun_Edge_AmbiqSDK_BSP
+BOARDPATH			 = ${SDKPATH}/boards/SparkFun_Edge_BSP# Set this as the path to the SparkFun Edge BSP (Board Support Package) directory. Initially assumes that you put the BSP under the 'boards' directory in the SDK
 
 USER_INCLUDE_DIRS	 = -I../src/inc1
 USER_INCLUDE_DIRS	+= -I../src/inc2

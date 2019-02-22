@@ -878,9 +878,8 @@ main(void)
     c5c0:	697b      	ldr	r3, [r7, #20]
     c5c2:	f5b3 6f00 	cmp.w	r3, #2048	; 0x800
     c5c6:	d3d9      	bcc.n	c57c <main+0x168>
+                    }
                 }
-
-
 
                 // Print out the results over UART for visual verification
                 for(uint32_t indi = 0; indi < ADC_SAMPLES_PER_SLOT; indi++){
@@ -3567,39 +3566,16 @@ am_util_stdio_terminal_clear(void)
     d5a0:	0000eec4 	.word	0x0000eec4
 
 0000d5a4 <Reset_Handler>:
-Reset_Handler(void)
-{
-    //
-    // Set the vector table pointer.
-    //
-    __asm("    ldr    r0, =0xE000ED08\n"
     d5a4:	4811      	ldr	r0, [pc, #68]	; (d5ec <zero_loop+0x12>)
     d5a6:	4912      	ldr	r1, [pc, #72]	; (d5f0 <zero_loop+0x16>)
     d5a8:	6001      	str	r1, [r0, #0]
-          "    str    r1, [r0]");
-
-    //
-    // Set the stack pointer.
-    //
-    __asm("    ldr    sp, [r1]");
     d5aa:	f8d1 d000 	ldr.w	sp, [r1]
-#ifndef NOFPU
-    //
-    // Enable the FPU.
-    //
-    __asm("ldr  r0, =0xE000ED88\n"
     d5ae:	4811      	ldr	r0, [pc, #68]	; (d5f4 <zero_loop+0x1a>)
     d5b0:	6801      	ldr	r1, [r0, #0]
     d5b2:	f441 0170 	orr.w	r1, r1, #15728640	; 0xf00000
     d5b6:	6001      	str	r1, [r0, #0]
     d5b8:	f3bf 8f4f 	dsb	sy
     d5bc:	f3bf 8f6f 	isb	sy
-          "isb\n");
-#endif
-    //
-    // Copy the data segment initializers from flash to SRAM.
-    //
-    __asm("    ldr     r0, =_init_data\n"
     d5c0:	480d      	ldr	r0, [pc, #52]	; (d5f8 <zero_loop+0x1e>)
     d5c2:	490e      	ldr	r1, [pc, #56]	; (d5fc <zero_loop+0x22>)
     d5c4:	4a0e      	ldr	r2, [pc, #56]	; (d600 <zero_loop+0x26>)
@@ -3609,12 +3585,6 @@ Reset_Handler(void)
     d5ca:	f841 3b04 	str.w	r3, [r1], #4
     d5ce:	4291      	cmp	r1, r2
     d5d0:	dbf9      	blt.n	d5c6 <copy_loop>
-          "        cmp     r1, r2\n"
-          "        blt     copy_loop\n");
-    //
-    // Zero fill the bss segment.
-    //
-    __asm("    ldr     r0, =_sbss\n"
     d5d2:	480c      	ldr	r0, [pc, #48]	; (d604 <zero_loop+0x2a>)
     d5d4:	490c      	ldr	r1, [pc, #48]	; (d608 <zero_loop+0x2e>)
     d5d6:	f04f 0200 	mov.w	r2, #0
@@ -3624,20 +3594,8 @@ Reset_Handler(void)
     d5dc:	bfb8      	it	lt
     d5de:	f840 2b04 	strlt.w	r2, [r0], #4
     d5e2:	dbfa      	blt.n	d5da <zero_loop>
-          "        blt     zero_loop");
-
-    //
-    // Call the application's entry point.
-    //
-    main();
     d5e4:	f7fe ff16 	bl	c414 <main>
-
-    //
-    // If main returns then execute a break point instruction
-    //
-    __asm("    bkpt     ");
     d5e8:	be00      	bkpt	0x0000
-}
     d5ea:	bf00      	nop
     d5ec:	e000ed08 	.word	0xe000ed08
     d5f0:	0000c000 	.word	0x0000c000
@@ -3649,33 +3607,13 @@ Reset_Handler(void)
     d608:	10007240 	.word	0x10007240
 
 0000d60c <NMI_Handler>:
-// by a debugger.
-//
-//*****************************************************************************
-void
-NMI_Handler(void)
-{
     d60c:	b480      	push	{r7}
     d60e:	af00      	add	r7, sp, #0
-    //
-    // Go into an infinite loop.
-    //
-    while(1)
     d610:	e7fe      	b.n	d610 <NMI_Handler+0x4>
 
 0000d612 <DebugMon_Handler>:
-// for examination by a debugger.
-//
-//*****************************************************************************
-void
-am_default_isr(void)
-{
     d612:	b480      	push	{r7}
     d614:	af00      	add	r7, sp, #0
-    //
-    // Go into an infinite loop.
-    //
-    while(1)
     d616:	e7fe      	b.n	d616 <DebugMon_Handler+0x4>
 
 0000d618 <am_bsp_uart_string_print>:
@@ -5966,11 +5904,11 @@ am_default_isr(void)
     ecd4:	44412041 	.word	0x44412041
     ecd8:	65542043 	.word	0x65542043
     ecdc:	000a7473 	.word	0x000a7473
-    ece0:	353a3232 	.word	0x353a3232
-    ece4:	30333a36 	.word	0x30333a36
+    ece0:	353a3231 	.word	0x353a3231
+    ece4:	39333a30 	.word	0x39333a30
     ece8:	00000000 	.word	0x00000000
     ecec:	20626546 	.word	0x20626546
-    ecf0:	32203531 	.word	0x32203531
+    ecf0:	32203232 	.word	0x32203232
     ecf4:	00393130 	.word	0x00393130
     ecf8:	706d6f43 	.word	0x706d6f43
     ecfc:	64656c69 	.word	0x64656c69

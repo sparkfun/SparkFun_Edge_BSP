@@ -32,10 +32,11 @@ int main(void)
 
     am_util_stdio_terminal_clear();
 
-    am_util_stdio_printf("SparkFun Edge Board Test\n");
+    am_util_stdio_printf("SparkFun Edge Project Template\n");
     am_util_stdio_printf("Compiled on %s, %s\n\n", __DATE__, __TIME__);
     am_util_stdio_printf("SparkFun Edge Debug Output (UART)\r\n");
     am_bsp_uart_string_print("Hello, World!\r\n");  // Sting_print has less overhead than printf (and less risky behavior since no varargs)
+    am_bsp_uart_string_print("This project is meant to serve as a template for making your own apps as a makefile project\r\n");  
 
     uint32_t pin14Val = 0; // Default to 0 to illustrate pull-up on hardware
     am_hal_gpio_state_read( AM_BSP_GPIO_14, AM_HAL_GPIO_INPUT_READ, &pin14Val);
