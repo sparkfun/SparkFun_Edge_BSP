@@ -150,26 +150,26 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_UART_RX =
     .uFuncSel            = AM_HAL_PIN_36_UART1RX
 };
 
-//*****************************************************************************
-//
-//  UART_CTS pin.
-//
-//*****************************************************************************
-const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_UART_CTS =
-{
-    .uFuncSel            = AM_HAL_PIN_45_UART1CTS
-};
+// //*****************************************************************************
+// //
+// //  UART_CTS pin.
+// //
+// //*****************************************************************************
+// const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_UART_CTS =
+// {
+//     .uFuncSel            = AM_HAL_PIN_45_UART1CTS
+// };
 
-//*****************************************************************************
-//
-//  UART_RTS pin.
-//
-//*****************************************************************************
-const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_UART_RTS =
-{
-    .uFuncSel            = AM_HAL_PIN_44_UART1RTS,
-    .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
-};
+// //*****************************************************************************
+// //
+// //  UART_RTS pin.
+// //
+// //*****************************************************************************
+// const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_UART_RTS =
+// {
+//     .uFuncSel            = AM_HAL_PIN_44_UART1RTS,
+//     .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_2MA
+// };
 
 //*****************************************************************************
 //

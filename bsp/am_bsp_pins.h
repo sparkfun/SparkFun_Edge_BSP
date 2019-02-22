@@ -167,21 +167,21 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_COM_UART_RX;
 #define AM_BSP_GPIO_UART_RX             36
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_UART_RX;
 
-//*****************************************************************************
-//
-//  UART_CTS pin.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_UART_CTS            45
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_UART_CTS;
+// //*****************************************************************************
+// //
+// //  UART_CTS pin.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_UART_CTS            45
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_UART_CTS;
 
-//*****************************************************************************
-//
-//  UART_RTS pin.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_UART_RTS            44
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_UART_RTS;
+// //*****************************************************************************
+// //
+// //  UART_RTS pin.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_UART_RTS            44
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_UART_RTS;
 
 //*****************************************************************************
 //
