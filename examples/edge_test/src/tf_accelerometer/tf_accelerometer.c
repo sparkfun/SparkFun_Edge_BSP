@@ -9,7 +9,6 @@
 uint32_t i2cTX[TF_ACC_MAX_XFER_SIZE]; // = {0, 0}; // WHO_AM_I register
 uint32_t i2cRX[TF_ACC_MAX_XFER_SIZE]; // = {0};
 
-uint32_t iom = AM_BSP_I2C_ACCELEROMETER_IOM; // IO module 4 -- switch to 3 if using IOM3
 void * iomHandle;
 
 lis2dh12_ctx_t dev_ctx;
@@ -362,7 +361,7 @@ static void platform_init(void)
     };
 
     // Initialize the IOM.
-    retVal32 = am_hal_iom_initialize(iom, &iomHandle);
+    retVal32 = am_hal_iom_initialize(AM_BSP_I2C_ACCELEROMETER_IOM, &iomHandle);
     if (retVal32 != AM_HAL_STATUS_SUCCESS) return; // -1;
 
     retVal32 = am_hal_iom_power_ctrl(iomHandle, AM_HAL_SYSCTRL_WAKE, false);
