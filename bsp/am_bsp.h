@@ -96,6 +96,12 @@ extern am_devices_button_t am_bsp_psButtons[AM_BSP_NUM_BUTTONS];
 #define AM_BSP_NUM_LEDS                   4
 extern am_devices_led_t am_bsp_psLEDs[AM_BSP_NUM_LEDS];
 
+#define AM_BSP_GPIO_LED_RED             AM_BSP_GPIO_LED0
+#define AM_BSP_GPIO_LED_BLUE            AM_BSP_GPIO_LED1
+#define AM_BSP_GPIO_LED_GREEN           AM_BSP_GPIO_LED2
+#define AM_BSP_GPIO_LED_YELLOW          AM_BSP_GPIO_LED3
+
+
 //*****************************************************************************
 //
 // PWM_LED peripheral assignments.

@@ -77,7 +77,6 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_BUTTON0;
 //
 //*****************************************************************************
 #define AM_BSP_GPIO_LED0                46
-#define AM_BSP_GPIO_LED_RED             AM_BSP_GPIO_LED0
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED0;
 
 //*****************************************************************************
@@ -86,7 +85,6 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED0;
 //
 //*****************************************************************************
 #define AM_BSP_GPIO_LED1                37
-#define AM_BSP_GPIO_LED_BLUE            AM_BSP_GPIO_LED1
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED1;
 
 //*****************************************************************************
@@ -95,7 +93,6 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED1;
 //
 //*****************************************************************************
 #define AM_BSP_GPIO_LED2                44
-#define AM_BSP_GPIO_LED_GREEN           AM_BSP_GPIO_LED2
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED2;
 
 //*****************************************************************************
@@ -104,7 +101,6 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED2;
 //
 //*****************************************************************************
 #define AM_BSP_GPIO_LED3                47
-#define AM_BSP_GPIO_LED_YELLOW          AM_BSP_GPIO_LED3
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_LED3;
 
 //*****************************************************************************
