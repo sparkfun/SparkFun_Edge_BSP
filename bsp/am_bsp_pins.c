@@ -919,22 +919,22 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_SWDIO =
     .uFuncSel            = AM_HAL_PIN_21_SWDIO
 };
 
-//*****************************************************************************
-//
-//  FIREBALL_CE pin: Fireball device test board chip select.
-//
-//*****************************************************************************
-const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_FIREBALL_CE =
-{
-    .uFuncSel            = AM_HAL_PIN_30_NCE30,
-    .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_12MA,
-    .eGPOutcfg           = AM_HAL_GPIO_PIN_OUTCFG_PUSHPULL,
-    .eGPInput            = AM_HAL_GPIO_PIN_INPUT_NONE,
-    .eIntDir             = AM_HAL_GPIO_PIN_INTDIR_LO2HI,
-    .uIOMnum             = 5,
-    .uNCE                = 3,
-    .eCEpol              = AM_HAL_GPIO_PIN_CEPOL_ACTIVELOW
-};
+// //*****************************************************************************
+// //
+// //  FIREBALL_CE pin: Fireball device test board chip select.
+// //
+// //*****************************************************************************
+// const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_FIREBALL_CE =
+// {
+//     .uFuncSel            = AM_HAL_PIN_30_NCE30,
+//     .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_12MA,
+//     .eGPOutcfg           = AM_HAL_GPIO_PIN_OUTCFG_PUSHPULL,
+//     .eGPInput            = AM_HAL_GPIO_PIN_INPUT_NONE,
+//     .eIntDir             = AM_HAL_GPIO_PIN_INTDIR_LO2HI,
+//     .uIOMnum             = 5,
+//     .uNCE                = 3,
+//     .eCEpol              = AM_HAL_GPIO_PIN_CEPOL_ACTIVELOW
+// };
 
 //*****************************************************************************
 //

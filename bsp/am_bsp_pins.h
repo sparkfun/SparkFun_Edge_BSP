@@ -619,14 +619,14 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_SWDCK;
 #define AM_BSP_GPIO_SWDIO               21
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_SWDIO;
 
-//*****************************************************************************
-//
-//  FIREBALL_CE pin: Fireball device test board chip select.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_FIREBALL_CE         30
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_FIREBALL_CE;
-#define AM_BSP_FIREBALL_CE_CHNL         3
+// //*****************************************************************************
+// //
+// //  FIREBALL_CE pin: Fireball device test board chip select.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_FIREBALL_CE         30
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_FIREBALL_CE;
+// #define AM_BSP_FIREBALL_CE_CHNL         3
 
 
 #ifdef __cplusplus
