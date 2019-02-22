@@ -819,74 +819,74 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_MSPI_SCK =
     .uIOMnum             = 6
 };
 
-// //*****************************************************************************
-// //
-// //  IOS_CE pin: I/O Slave chip select.
-// //
-// //*****************************************************************************
-// const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_CE =
-// {
-//     .uFuncSel            = AM_HAL_PIN_3_SLnCE,
-//     .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE,
-//     .uNCE                = 0,
-//     .eCEpol              = AM_HAL_GPIO_PIN_CEPOL_ACTIVELOW
-// };
+//*****************************************************************************
+//
+//  IOS_CE pin: I/O Slave chip select.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_CE =
+{
+    .uFuncSel            = AM_HAL_PIN_3_SLnCE,
+    .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .uNCE                = 0,
+    .eCEpol              = AM_HAL_GPIO_PIN_CEPOL_ACTIVELOW
+};
 
-// //*****************************************************************************
-// //
-// //  IOS_MISO pin: I/O Slave SPI MISO signal.
-// //
-// //*****************************************************************************
-// const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_MISO =
-// {
-//     .uFuncSel            = AM_HAL_PIN_2_SLMISO,
-//     .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_12MA
-// };
+//*****************************************************************************
+//
+//  IOS_MISO pin: I/O Slave SPI MISO signal.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_MISO =
+{
+    .uFuncSel            = AM_HAL_PIN_2_SLMISO,
+    .eDriveStrength      = AM_HAL_GPIO_PIN_DRIVESTRENGTH_12MA
+};
 
-// //*****************************************************************************
-// //
-// //  IOS_MOSI pin: I/O Slave SPI MOSI signal.
-// //
-// //*****************************************************************************
-// const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_MOSI =
-// {
-//     .uFuncSel            = AM_HAL_PIN_1_SLMOSI,
-//     .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE
-// };
+//*****************************************************************************
+//
+//  IOS_MOSI pin: I/O Slave SPI MOSI signal.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_MOSI =
+{
+    .uFuncSel            = AM_HAL_PIN_1_SLMOSI,
+    .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE
+};
 
-// //*****************************************************************************
-// //
-// //  IOS_SCK pin: I/O Slave SPI SCK signal.
-// //
-// //*****************************************************************************
-// const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_SCK =
-// {
-//     .uFuncSel            = AM_HAL_PIN_0_SLSCK,
-//     .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE
-// };
+//*****************************************************************************
+//
+//  IOS_SCK pin: I/O Slave SPI SCK signal.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_SCK =
+{
+    .uFuncSel            = AM_HAL_PIN_0_SLSCK,
+    .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE
+};
 
-// //*****************************************************************************
-// //
-// //  IOS_SCL pin: I/O Slave I2C clock signal.
-// //
-// //*****************************************************************************
-// const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_SCL =
-// {
-//     .uFuncSel            = AM_HAL_PIN_0_SLSCL,
-//     .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE
-// };
+//*****************************************************************************
+//
+//  IOS_SCL pin: I/O Slave I2C clock signal.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_SCL =
+{
+    .uFuncSel            = AM_HAL_PIN_0_SLSCL,
+    .eGPInput            = AM_HAL_GPIO_PIN_INPUT_ENABLE
+};
 
-// //*****************************************************************************
-// //
-// //  IOS_SDA pin: I/O Slave I2C data signal.
-// //
-// //*****************************************************************************
-// const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_SDA =
-// {
-//     .uFuncSel            = AM_HAL_PIN_1_SLSDAWIR3,
-//     .ePullup             = AM_HAL_GPIO_PIN_PULLUP_1_5K,
-//     .eGPOutcfg           = AM_HAL_GPIO_PIN_OUTCFG_OPENDRAIN
-// };
+//*****************************************************************************
+//
+//  IOS_SDA pin: I/O Slave I2C data signal.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_IOS_SDA =
+{
+    .uFuncSel            = AM_HAL_PIN_1_SLSDAWIR3,
+    .ePullup             = AM_HAL_GPIO_PIN_PULLUP_1_5K,
+    .eGPOutcfg           = AM_HAL_GPIO_PIN_OUTCFG_OPENDRAIN
+};
 
 //*****************************************************************************
 //

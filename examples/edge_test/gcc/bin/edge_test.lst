@@ -73,126 +73,230 @@ Disassembly of section .text:
     c19e:	bf00      	nop
 
 0000c1a0 <main>:
+//
+// Main function.
+//
+//*****************************************************************************
+int main(void)
+{
     c1a0:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+}
+
+static int boardSetup(void)
+{
+    // Set the clock frequency.
+    am_hal_clkgen_control(AM_HAL_CLKGEN_CONTROL_SYSCLK_MAX, 0);
     c1a4:	2100      	movs	r1, #0
+{
     c1a6:	b082      	sub	sp, #8
+    am_hal_clkgen_control(AM_HAL_CLKGEN_CONTROL_SYSCLK_MAX, 0);
     c1a8:	4608      	mov	r0, r1
     c1aa:	f001 fd27 	bl	dbfc <am_hal_clkgen_control>
+
+    // Set the default cache configuration
+    am_hal_cachectrl_config(&am_hal_cachectrl_defaults);
     c1ae:	4853      	ldr	r0, [pc, #332]	; (c2fc <main+0x15c>)
+        lis2dh12_xl_data_ready_get(&dev_ctx, &reg.byte);
     c1b0:	4c53      	ldr	r4, [pc, #332]	; (c300 <main+0x160>)
+            memset(data_raw_acceleration.u8bit, 0x00, 3*sizeof(int16_t));
     c1b2:	4f54      	ldr	r7, [pc, #336]	; (c304 <main+0x164>)
+            acceleration_mg[0] =
     c1b4:	f8df 818c 	ldr.w	r8, [pc, #396]	; c344 <main+0x1a4>
+    am_hal_cachectrl_config(&am_hal_cachectrl_defaults);
     c1b8:	f001 fcec 	bl	db94 <am_hal_cachectrl_config>
+    am_hal_cachectrl_enable();
     c1bc:	f001 fd14 	bl	dbe8 <am_hal_cachectrl_enable>
+
+    // Configure the board for low power operation.
+    am_bsp_low_power_init();
     c1c0:	f001 fa68 	bl	d694 <am_bsp_low_power_init>
+
+    // Initialize the printf interface for ITM/SWO output.
+    am_bsp_uart_printf_enable(); // Enable UART - will set debug output to UART
     c1c4:	f001 face 	bl	d764 <am_bsp_uart_printf_enable>
+    //am_bsp_itm_printf_enable(); // Redirect debug output to SWO
+
+    // Setup LED's as outputs
+    am_hal_gpio_pinconfig(AM_BSP_GPIO_LED_RED, g_AM_HAL_GPIO_OUTPUT_12);
     c1c8:	4b4f      	ldr	r3, [pc, #316]	; (c308 <main+0x168>)
     c1ca:	681d      	ldr	r5, [r3, #0]
     c1cc:	202e      	movs	r0, #46	; 0x2e
     c1ce:	4629      	mov	r1, r5
     c1d0:	f001 fe94 	bl	defc <am_hal_gpio_pinconfig>
+    am_hal_gpio_pinconfig(AM_BSP_GPIO_LED_BLUE, g_AM_HAL_GPIO_OUTPUT_12);
     c1d4:	4629      	mov	r1, r5
     c1d6:	2025      	movs	r0, #37	; 0x25
     c1d8:	f001 fe90 	bl	defc <am_hal_gpio_pinconfig>
+    am_hal_gpio_pinconfig(AM_BSP_GPIO_LED_GREEN, g_AM_HAL_GPIO_OUTPUT_12);
     c1dc:	4629      	mov	r1, r5
     c1de:	202c      	movs	r0, #44	; 0x2c
     c1e0:	f001 fe8c 	bl	defc <am_hal_gpio_pinconfig>
+    am_hal_gpio_pinconfig(AM_BSP_GPIO_LED_YELLOW, g_AM_HAL_GPIO_OUTPUT_12);
     c1e4:	4629      	mov	r1, r5
     c1e6:	202f      	movs	r0, #47	; 0x2f
     c1e8:	f001 fe88 	bl	defc <am_hal_gpio_pinconfig>
+
+    // Set up button 14 as input (has pullup resistor on hardware)
+    am_hal_gpio_pinconfig(AM_BSP_GPIO_14, g_AM_HAL_GPIO_INPUT);
     c1ec:	4b47      	ldr	r3, [pc, #284]	; (c30c <main+0x16c>)
     c1ee:	200e      	movs	r0, #14
     c1f0:	6819      	ldr	r1, [r3, #0]
     c1f2:	f001 fe83 	bl	defc <am_hal_gpio_pinconfig>
+
+    // Turn on the LEDs
+    am_hal_gpio_output_set(AM_BSP_GPIO_LED_RED);
     c1f6:	4b46      	ldr	r3, [pc, #280]	; (c310 <main+0x170>)
     c1f8:	f44f 4180 	mov.w	r1, #16384	; 0x4000
+    am_hal_gpio_output_set(AM_BSP_GPIO_LED_BLUE);
     c1fc:	2220      	movs	r2, #32
+    am_hal_gpio_output_set(AM_BSP_GPIO_LED_RED);
     c1fe:	6019      	str	r1, [r3, #0]
+    am_hal_gpio_output_set(AM_BSP_GPIO_LED_BLUE);
     c200:	601a      	str	r2, [r3, #0]
+    am_hal_gpio_output_set(AM_BSP_GPIO_LED_GREEN);
     c202:	f44f 5180 	mov.w	r1, #4096	; 0x1000
+    am_hal_gpio_output_set(AM_BSP_GPIO_LED_YELLOW);
     c206:	f44f 4200 	mov.w	r2, #32768	; 0x8000
+    am_hal_gpio_output_set(AM_BSP_GPIO_LED_GREEN);
     c20a:	6019      	str	r1, [r3, #0]
+    am_hal_gpio_output_set(AM_BSP_GPIO_LED_YELLOW);
     c20c:	601a      	str	r2, [r3, #0]
+    am_util_stdio_terminal_clear();
     c20e:	f000 fec3 	bl	cf98 <am_util_stdio_terminal_clear>
+    am_util_stdio_printf("SparkFun Edge Board Test\n");
     c212:	4840      	ldr	r0, [pc, #256]	; (c314 <main+0x174>)
     c214:	f000 fea4 	bl	cf60 <am_util_stdio_printf>
+    am_util_stdio_printf("Compiled on %s, %s\n\n", __DATE__, __TIME__);
     c218:	4a3f      	ldr	r2, [pc, #252]	; (c318 <main+0x178>)
     c21a:	4940      	ldr	r1, [pc, #256]	; (c31c <main+0x17c>)
     c21c:	4840      	ldr	r0, [pc, #256]	; (c320 <main+0x180>)
     c21e:	f000 fe9f 	bl	cf60 <am_util_stdio_printf>
+    am_util_stdio_printf("SparkFun Tensorflow Debug Output (UART)\r\n");
     c222:	4840      	ldr	r0, [pc, #256]	; (c324 <main+0x184>)
     c224:	f000 fe9c 	bl	cf60 <am_util_stdio_printf>
+    am_bsp_uart_string_print("Hello, UART!\r\n");
     c228:	483f      	ldr	r0, [pc, #252]	; (c328 <main+0x188>)
     c22a:	f001 fa0f 	bl	d64c <am_bsp_uart_string_print>
+    int accInitRes = initAccelerometer();
     c22e:	f001 f899 	bl	d364 <initAccelerometer>
+    am_util_stdio_printf("Accelerometer init returned %8x\r\n", accInitRes);
     c232:	4601      	mov	r1, r0
     c234:	483d      	ldr	r0, [pc, #244]	; (c32c <main+0x18c>)
     c236:	f000 fe93 	bl	cf60 <am_util_stdio_printf>
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_YELLOW);
+}
+
+static int testADC(void)
+{
+    initADC();
     c23a:	f000 ffad 	bl	d198 <initADC>
+    enableAdcInterrupts();
     c23e:	f000 ffcb 	bl	d1d8 <enableAdcInterrupts>
+        am_hal_gpio_state_read( AM_BSP_GPIO_14, AM_HAL_GPIO_INPUT_READ, &pin14Val);
     c242:	2100      	movs	r1, #0
+        uint32_t pin14Val = 1; 
     c244:	2601      	movs	r6, #1
+        am_hal_gpio_state_read( AM_BSP_GPIO_14, AM_HAL_GPIO_INPUT_READ, &pin14Val);
     c246:	aa01      	add	r2, sp, #4
     c248:	200e      	movs	r0, #14
+        uint32_t pin14Val = 1; 
     c24a:	9601      	str	r6, [sp, #4]
+        am_hal_gpio_state_read( AM_BSP_GPIO_14, AM_HAL_GPIO_INPUT_READ, &pin14Val);
     c24c:	f001 ff96 	bl	e17c <am_hal_gpio_state_read>
+        if( pin14Val == 0 ){ break; }
     c250:	9d01      	ldr	r5, [sp, #4]
+        lis2dh12_xl_data_ready_get(&dev_ctx, &reg.byte);
     c252:	4669      	mov	r1, sp
     c254:	4620      	mov	r0, r4
+        if( pin14Val == 0 ){ break; }
     c256:	2d00      	cmp	r5, #0
     c258:	d03a      	beq.n	c2d0 <main+0x130>
+        lis2dh12_xl_data_ready_get(&dev_ctx, &reg.byte);
     c25a:	f001 f9d3 	bl	d604 <lis2dh12_xl_data_ready_get>
+        if (reg.byte)
     c25e:	f89d 3000 	ldrb.w	r3, [sp]
     c262:	b9b3      	cbnz	r3, c292 <main+0xf2>
+        lis2dh12_temp_data_ready_get(&dev_ctx, &reg.byte);      
     c264:	4669      	mov	r1, sp
     c266:	4620      	mov	r0, r4
     c268:	f001 f8fe 	bl	d468 <lis2dh12_temp_data_ready_get>
+        if (reg.byte)    
     c26c:	f89d 3000 	ldrb.w	r3, [sp]
     c270:	2b00      	cmp	r3, #0
     c272:	d0e6      	beq.n	c242 <main+0xa2>
+            memset(data_raw_temperature.u8bit, 0x00, sizeof(int16_t));
     c274:	4d2e      	ldr	r5, [pc, #184]	; (c330 <main+0x190>)
     c276:	2300      	movs	r3, #0
     c278:	802b      	strh	r3, [r5, #0]
+            lis2dh12_temperature_raw_get(&dev_ctx, data_raw_temperature.u8bit);
     c27a:	4629      	mov	r1, r5
     c27c:	4620      	mov	r0, r4
     c27e:	f001 f903 	bl	d488 <lis2dh12_temperature_raw_get>
+            lis2dh12_from_lsb_hr_to_celsius(data_raw_temperature.i16bit);
     c282:	f9b5 0000 	ldrsh.w	r0, [r5]
     c286:	f001 f8e1 	bl	d44c <lis2dh12_from_lsb_hr_to_celsius>
+            temperature_degC =
     c28a:	4b2a      	ldr	r3, [pc, #168]	; (c334 <main+0x194>)
     c28c:	ed83 0a00 	vstr	s0, [r3]
+    {
     c290:	e7d7      	b.n	c242 <main+0xa2>
+            memset(data_raw_acceleration.u8bit, 0x00, 3*sizeof(int16_t));
     c292:	2300      	movs	r3, #0
+            lis2dh12_acceleration_raw_get(&dev_ctx, data_raw_acceleration.u8bit);
     c294:	491b      	ldr	r1, [pc, #108]	; (c304 <main+0x164>)
+            memset(data_raw_acceleration.u8bit, 0x00, 3*sizeof(int16_t));
     c296:	603b      	str	r3, [r7, #0]
+            lis2dh12_acceleration_raw_get(&dev_ctx, data_raw_acceleration.u8bit);
     c298:	4620      	mov	r0, r4
+            memset(data_raw_acceleration.u8bit, 0x00, 3*sizeof(int16_t));
     c29a:	80bb      	strh	r3, [r7, #4]
+            lis2dh12_acceleration_raw_get(&dev_ctx, data_raw_acceleration.u8bit);
     c29c:	f001 f9c2 	bl	d624 <lis2dh12_acceleration_raw_get>
+            lis2dh12_from_fs2_hr_to_mg(data_raw_acceleration.i16bit[0]);
     c2a0:	f9b7 0000 	ldrsh.w	r0, [r7]
     c2a4:	f001 f8cc 	bl	d440 <lis2dh12_from_fs2_hr_to_mg>
+            lis2dh12_from_fs2_hr_to_mg(data_raw_acceleration.i16bit[1]);
     c2a8:	f9b7 0002 	ldrsh.w	r0, [r7, #2]
+            acceleration_mg[0] =
     c2ac:	ed88 0a00 	vstr	s0, [r8]
+            lis2dh12_from_fs2_hr_to_mg(data_raw_acceleration.i16bit[1]);
     c2b0:	f001 f8c6 	bl	d440 <lis2dh12_from_fs2_hr_to_mg>
+            lis2dh12_from_fs2_hr_to_mg(data_raw_acceleration.i16bit[2]);
     c2b4:	f9b7 0004 	ldrsh.w	r0, [r7, #4]
+            acceleration_mg[1] =
     c2b8:	ed88 0a01 	vstr	s0, [r8, #4]
+            lis2dh12_from_fs2_hr_to_mg(data_raw_acceleration.i16bit[2]);
     c2bc:	f001 f8c0 	bl	d440 <lis2dh12_from_fs2_hr_to_mg>
+            am_util_stdio_printf("%d\r\n",
     c2c0:	4b1d      	ldr	r3, [pc, #116]	; (c338 <main+0x198>)
     c2c2:	481e      	ldr	r0, [pc, #120]	; (c33c <main+0x19c>)
     c2c4:	6819      	ldr	r1, [r3, #0]
+            acceleration_mg[2] =
     c2c6:	ed88 0a02 	vstr	s0, [r8, #8]
+            am_util_stdio_printf("%d\r\n",
     c2ca:	f000 fe49 	bl	cf60 <am_util_stdio_printf>
     c2ce:	e7c9      	b.n	c264 <main+0xc4>
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_RED);
     c2d0:	4b1b      	ldr	r3, [pc, #108]	; (c340 <main+0x1a0>)
     c2d2:	f44f 4280 	mov.w	r2, #16384	; 0x4000
     c2d6:	601a      	str	r2, [r3, #0]
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_GREEN);
     c2d8:	f44f 5180 	mov.w	r1, #4096	; 0x1000
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_YELLOW);
     c2dc:	f44f 4200 	mov.w	r2, #32768	; 0x8000
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_BLUE);
     c2e0:	2020      	movs	r0, #32
     c2e2:	6018      	str	r0, [r3, #0]
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_GREEN);
     c2e4:	6019      	str	r1, [r3, #0]
+    am_hal_gpio_output_clear(AM_BSP_GPIO_LED_YELLOW);
     c2e6:	601a      	str	r2, [r3, #0]
+    am_bsp_debug_printf_disable();
     c2e8:	f001 fa06 	bl	d6f8 <am_bsp_debug_printf_disable>
+    am_hal_sysctrl_sleep(AM_HAL_SYSCTRL_SLEEP_DEEP);
     c2ec:	4630      	mov	r0, r6
     c2ee:	f002 fe77 	bl	efe0 <am_hal_sysctrl_sleep>
+}
     c2f2:	4628      	mov	r0, r5
     c2f4:	b002      	add	sp, #8
     c2f6:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
@@ -2038,24 +2142,40 @@ am_util_stdio_printf(const char *pcFmt, ...)
     cfa0:	0000fb38 	.word	0x0000fb38
 
 0000cfa4 <NMI_Handler>:
+    //
+    // Go into an infinite loop.
+    //
+    while(1)
+    {
+    }
     cfa4:	e7fe      	b.n	cfa4 <NMI_Handler>
     cfa6:	bf00      	nop
 
 0000cfa8 <DebugMon_Handler>:
+    //
+    // Go into an infinite loop.
+    //
+    while(1)
+    {
+    }
     cfa8:	e7fe      	b.n	cfa8 <DebugMon_Handler>
     cfaa:	bf00      	nop
 
 0000cfac <Reset_Handler>:
+    __asm("    ldr    r0, =0xE000ED08\n"
     cfac:	4811      	ldr	r0, [pc, #68]	; (cff4 <zero_loop+0x12>)
     cfae:	4912      	ldr	r1, [pc, #72]	; (cff8 <zero_loop+0x16>)
     cfb0:	6001      	str	r1, [r0, #0]
+    __asm("    ldr    sp, [r1]");
     cfb2:	f8d1 d000 	ldr.w	sp, [r1]
+    __asm("ldr  r0, =0xE000ED88\n"
     cfb6:	4811      	ldr	r0, [pc, #68]	; (cffc <zero_loop+0x1a>)
     cfb8:	6801      	ldr	r1, [r0, #0]
     cfba:	f441 0170 	orr.w	r1, r1, #15728640	; 0xf00000
     cfbe:	6001      	str	r1, [r0, #0]
     cfc0:	f3bf 8f4f 	dsb	sy
     cfc4:	f3bf 8f6f 	isb	sy
+    __asm("    ldr     r0, =_init_data\n"
     cfc8:	480d      	ldr	r0, [pc, #52]	; (d000 <zero_loop+0x1e>)
     cfca:	490e      	ldr	r1, [pc, #56]	; (d004 <zero_loop+0x22>)
     cfcc:	4a0e      	ldr	r2, [pc, #56]	; (d008 <zero_loop+0x26>)
@@ -2065,6 +2185,7 @@ am_util_stdio_printf(const char *pcFmt, ...)
     cfd2:	f841 3b04 	str.w	r3, [r1], #4
     cfd6:	4291      	cmp	r1, r2
     cfd8:	dbf9      	blt.n	cfce <copy_loop>
+    __asm("    ldr     r0, =_sbss\n"
     cfda:	480c      	ldr	r0, [pc, #48]	; (d00c <zero_loop+0x2a>)
     cfdc:	490c      	ldr	r1, [pc, #48]	; (d010 <zero_loop+0x2e>)
     cfde:	f04f 0200 	mov.w	r2, #0
@@ -2074,8 +2195,11 @@ am_util_stdio_printf(const char *pcFmt, ...)
     cfe4:	bfb8      	it	lt
     cfe6:	f840 2b04 	strlt.w	r2, [r0], #4
     cfea:	dbfa      	blt.n	cfe2 <zero_loop>
+    main();
     cfec:	f7ff f8d8 	bl	c1a0 <main>
+    __asm("    bkpt     ");
     cff0:	be00      	bkpt	0x0000
+}
     cff2:	0000      	.short	0x0000
     cff4:	e000ed08 	.word	0xe000ed08
     cff8:	0000c000 	.word	0x0000c000
@@ -2087,14 +2211,36 @@ am_util_stdio_printf(const char *pcFmt, ...)
     d010:	10004bc0 	.word	0x10004bc0
 
 0000d014 <am_ctimer_isr>:
+    .uFuncSel       = AM_HAL_PIN_11_ADCSE2,
+};
+
+void
+am_ctimer_isr(void)
+{
     d014:	b530      	push	{r4, r5, lr}
+  // Clear TimerA0 Interrupt.
+  am_hal_ctimer_int_clear(AM_HAL_CTIMER_INT_TIMERA0);
     d016:	2001      	movs	r0, #1
+{
     d018:	b085      	sub	sp, #20
+  am_hal_ctimer_int_clear(AM_HAL_CTIMER_INT_TIMERA0);
     d01a:	f000 ff2f 	bl	de7c <am_hal_ctimer_int_clear>
+{
+    am_hal_adc_config_t           ADCConfig;
+    am_hal_adc_slot_config_t      ADCSlotConfig;
+
+    // Initialize the ADC and get the handle.
+    if ( AM_HAL_STATUS_SUCCESS != am_hal_adc_initialize(0, &g_ADCHandle) )
     d01e:	4925      	ldr	r1, [pc, #148]	; (d0b4 <am_ctimer_isr+0xa0>)
     d020:	2000      	movs	r0, #0
     d022:	f000 fbcd 	bl	d7c0 <am_hal_adc_initialize>
     d026:	bb68      	cbnz	r0, d084 <am_ctimer_isr+0x70>
+    {
+        am_util_stdio_printf("Error - reservation of the ADC instance failed.\n");
+    }
+
+    // Power on the ADC.
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_power_control(g_ADCHandle,
     d028:	4c22      	ldr	r4, [pc, #136]	; (d0b4 <am_ctimer_isr+0xa0>)
     d02a:	2200      	movs	r2, #0
     d02c:	6820      	ldr	r0, [r4, #0]
@@ -2102,50 +2248,102 @@ am_util_stdio_printf(const char *pcFmt, ...)
     d030:	f000 fd4c 	bl	dacc <am_hal_adc_power_control>
     d034:	2800      	cmp	r0, #0
     d036:	d139      	bne.n	d0ac <am_ctimer_isr+0x98>
+        am_util_stdio_printf("Error - ADC power on failed.\n");
+    }
+
+    // Set up the ADC configuration parameters. These settings are reasonable
+    // for accurate measurements at a low sample rate.
+    ADCConfig.eClock             = AM_HAL_ADC_CLKSEL_HFRC;
     d038:	4b1f      	ldr	r3, [pc, #124]	; (d0b8 <am_ctimer_isr+0xa4>)
     d03a:	9302      	str	r3, [sp, #8]
+    ADCConfig.ePolarity          = AM_HAL_ADC_TRIGPOL_RISING;
+    ADCConfig.eTrigger           = AM_HAL_ADC_TRIGSEL_SOFTWARE;
+    ADCConfig.eReference         = AM_HAL_ADC_REFSEL_INT_2P0;
+    ADCConfig.eClockMode         = AM_HAL_ADC_CLKMODE_LOW_POWER;
     d03c:	2200      	movs	r2, #0
+    ADCConfig.ePowerMode         = AM_HAL_ADC_LPMODE0;
+    ADCConfig.eRepeat            = AM_HAL_ADC_REPEATING_SCAN;
     d03e:	2301      	movs	r3, #1
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_configure(g_ADCHandle, &ADCConfig))
     d040:	6820      	ldr	r0, [r4, #0]
+    ADCConfig.eClockMode         = AM_HAL_ADC_CLKMODE_LOW_POWER;
     d042:	f8ad 200c 	strh.w	r2, [sp, #12]
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_configure(g_ADCHandle, &ADCConfig))
     d046:	a902      	add	r1, sp, #8
+    ADCConfig.eRepeat            = AM_HAL_ADC_REPEATING_SCAN;
     d048:	f88d 300e 	strb.w	r3, [sp, #14]
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_configure(g_ADCHandle, &ADCConfig))
     d04c:	f000 fbfa 	bl	d844 <am_hal_adc_configure>
     d050:	bb40      	cbnz	r0, d0a4 <am_ctimer_isr+0x90>
+    {
+        am_util_stdio_printf("Error - configuring ADC failed.\n");
+    }
+
+    // Set up an ADC slot
+    ADCSlotConfig.eMeasToAvg      = AM_HAL_ADC_SLOT_AVG_1;
     d052:	f44f 3500 	mov.w	r5, #131072	; 0x20000
+    ADCSlotConfig.ePrecisionMode  = AM_HAL_ADC_SLOT_14BIT;
+    // ADCSlotConfig.eChannel        = AM_HAL_ADC_SLOT_CHSEL_SE1;
+    ADCSlotConfig.eChannel        = AM_HAL_ADC_SLOT_CHSEL_SE2;
+    ADCSlotConfig.bWindowCompare  = false;
+    ADCSlotConfig.bEnabled        = true;
     d056:	2301      	movs	r3, #1
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_configure_slot(g_ADCHandle, 0, &ADCSlotConfig))
     d058:	466a      	mov	r2, sp
     d05a:	2100      	movs	r1, #0
     d05c:	6820      	ldr	r0, [r4, #0]
+    ADCSlotConfig.eMeasToAvg      = AM_HAL_ADC_SLOT_AVG_1;
     d05e:	9500      	str	r5, [sp, #0]
+    ADCSlotConfig.bEnabled        = true;
     d060:	f88d 3004 	strb.w	r3, [sp, #4]
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_configure_slot(g_ADCHandle, 0, &ADCSlotConfig))
     d064:	f000 fc26 	bl	d8b4 <am_hal_adc_configure_slot>
     d068:	b9c0      	cbnz	r0, d09c <am_ctimer_isr+0x88>
+    {
+        am_util_stdio_printf("Error - configuring ADC Slot 0 failed.\n");
+    }
+  
+    am_hal_adc_interrupt_enable(g_ADCHandle, AM_HAL_ADC_INT_CNVCMP );
     d06a:	2101      	movs	r1, #1
     d06c:	6820      	ldr	r0, [r4, #0]
     d06e:	f000 fc8f 	bl	d990 <am_hal_adc_interrupt_enable>
+
+    //
+    // Enable the ADC.
+    //
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_enable(g_ADCHandle))
     d072:	6820      	ldr	r0, [r4, #0]
     d074:	f000 fc54 	bl	d920 <am_hal_adc_enable>
     d078:	b940      	cbnz	r0, d08c <am_ctimer_isr+0x78>
+  am_hal_adc_sw_trigger(g_ADCHandle);
     d07a:	6820      	ldr	r0, [r4, #0]
     d07c:	f000 fd14 	bl	daa8 <am_hal_adc_sw_trigger>
+}
     d080:	b005      	add	sp, #20
     d082:	bd30      	pop	{r4, r5, pc}
+        am_util_stdio_printf("Error - reservation of the ADC instance failed.\n");
     d084:	480d      	ldr	r0, [pc, #52]	; (d0bc <am_ctimer_isr+0xa8>)
     d086:	f7ff ff6b 	bl	cf60 <am_util_stdio_printf>
     d08a:	e7cd      	b.n	d028 <am_ctimer_isr+0x14>
+    {
+        am_util_stdio_printf("Error - enabling ADC failed.\n");
     d08c:	480c      	ldr	r0, [pc, #48]	; (d0c0 <am_ctimer_isr+0xac>)
     d08e:	f7ff ff67 	bl	cf60 <am_util_stdio_printf>
+  am_hal_adc_sw_trigger(g_ADCHandle);
     d092:	6820      	ldr	r0, [r4, #0]
     d094:	f000 fd08 	bl	daa8 <am_hal_adc_sw_trigger>
+}
     d098:	b005      	add	sp, #20
     d09a:	bd30      	pop	{r4, r5, pc}
+        am_util_stdio_printf("Error - configuring ADC Slot 0 failed.\n");
     d09c:	4809      	ldr	r0, [pc, #36]	; (d0c4 <am_ctimer_isr+0xb0>)
     d09e:	f7ff ff5f 	bl	cf60 <am_util_stdio_printf>
     d0a2:	e7e2      	b.n	d06a <am_ctimer_isr+0x56>
+        am_util_stdio_printf("Error - configuring ADC failed.\n");
     d0a4:	4808      	ldr	r0, [pc, #32]	; (d0c8 <am_ctimer_isr+0xb4>)
     d0a6:	f7ff ff5b 	bl	cf60 <am_util_stdio_printf>
     d0aa:	e7d2      	b.n	d052 <am_ctimer_isr+0x3e>
+        am_util_stdio_printf("Error - ADC power on failed.\n");
     d0ac:	4807      	ldr	r0, [pc, #28]	; (d0cc <am_ctimer_isr+0xb8>)
     d0ae:	f7ff ff57 	bl	cf60 <am_util_stdio_printf>
     d0b2:	e7c1      	b.n	d038 <am_ctimer_isr+0x24>
@@ -2158,72 +2356,114 @@ am_util_stdio_printf(const char *pcFmt, ...)
     d0cc:	0000fc74 	.word	0x0000fc74
 
 0000d0d0 <am_adc_isr>:
+{
     d0d0:	b530      	push	{r4, r5, lr}
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_interrupt_status(g_ADCHandle, &ui32IntMask, false))
     d0d2:	4c29      	ldr	r4, [pc, #164]	; (d178 <am_adc_isr+0xa8>)
+{
     d0d4:	b085      	sub	sp, #20
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_interrupt_status(g_ADCHandle, &ui32IntMask, false))
     d0d6:	2200      	movs	r2, #0
     d0d8:	6820      	ldr	r0, [r4, #0]
     d0da:	4669      	mov	r1, sp
     d0dc:	f000 fc6e 	bl	d9bc <am_hal_adc_interrupt_status>
     d0e0:	b9e0      	cbnz	r0, d11c <am_adc_isr+0x4c>
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_interrupt_clear(g_ADCHandle, ui32IntMask))
     d0e2:	9900      	ldr	r1, [sp, #0]
     d0e4:	6820      	ldr	r0, [r4, #0]
     d0e6:	f000 fc87 	bl	d9f8 <am_hal_adc_interrupt_clear>
     d0ea:	bb00      	cbnz	r0, d12e <am_adc_isr+0x5e>
+    if (ui32IntMask & AM_HAL_ADC_INT_CNVCMP)
     d0ec:	9b00      	ldr	r3, [sp, #0]
     d0ee:	6820      	ldr	r0, [r4, #0]
     d0f0:	07db      	lsls	r3, r3, #31
     d0f2:	d423      	bmi.n	d13c <am_adc_isr+0x6c>
+    audioSample = Sample.ui32Sample;
     d0f4:	4b21      	ldr	r3, [pc, #132]	; (d17c <am_adc_isr+0xac>)
     d0f6:	9a02      	ldr	r2, [sp, #8]
     d0f8:	601a      	str	r2, [r3, #0]
+static void adc_deconfig(void)
+{
+  //
+  // Disable the ADC.
+  //
+  if (AM_HAL_STATUS_SUCCESS != am_hal_adc_disable(g_ADCHandle))
     d0fa:	f000 fc31 	bl	d960 <am_hal_adc_disable>
     d0fe:	2800      	cmp	r0, #0
     d100:	d132      	bne.n	d168 <am_adc_isr+0x98>
+  }
+
+  //
+  // Enable the ADC power domain.
+  //
+  if (AM_HAL_STATUS_SUCCESS != am_hal_pwrctrl_periph_disable(AM_HAL_PWRCTRL_PERIPH_ADC))
     d102:	200a      	movs	r0, #10
     d104:	f001 fee0 	bl	eec8 <am_hal_pwrctrl_periph_disable>
     d108:	bb50      	cbnz	r0, d160 <am_adc_isr+0x90>
+  }
+
+  //
+  // Initialize the ADC and get the handle.
+  //
+  if (AM_HAL_STATUS_SUCCESS != am_hal_adc_deinitialize(g_ADCHandle))
     d10a:	6820      	ldr	r0, [r4, #0]
     d10c:	f000 fb7a 	bl	d804 <am_hal_adc_deinitialize>
     d110:	b9f0      	cbnz	r0, d150 <am_adc_isr+0x80>
+    am_hal_adc_sw_trigger(g_ADCHandle);
     d112:	6820      	ldr	r0, [r4, #0]
     d114:	f000 fcc8 	bl	daa8 <am_hal_adc_sw_trigger>
+}
     d118:	b005      	add	sp, #20
     d11a:	bd30      	pop	{r4, r5, pc}
+        am_util_stdio_printf("Error reading ADC interrupt status\n");
     d11c:	4818      	ldr	r0, [pc, #96]	; (d180 <am_adc_isr+0xb0>)
     d11e:	f7ff ff1f 	bl	cf60 <am_util_stdio_printf>
+    if (AM_HAL_STATUS_SUCCESS != am_hal_adc_interrupt_clear(g_ADCHandle, ui32IntMask))
     d122:	9900      	ldr	r1, [sp, #0]
     d124:	6820      	ldr	r0, [r4, #0]
     d126:	f000 fc67 	bl	d9f8 <am_hal_adc_interrupt_clear>
     d12a:	2800      	cmp	r0, #0
     d12c:	d0de      	beq.n	d0ec <am_adc_isr+0x1c>
+        am_util_stdio_printf("Error clearing ADC interrupt status\n");
     d12e:	4815      	ldr	r0, [pc, #84]	; (d184 <am_adc_isr+0xb4>)
     d130:	f7ff ff16 	bl	cf60 <am_util_stdio_printf>
+    if (ui32IntMask & AM_HAL_ADC_INT_CNVCMP)
     d134:	9b00      	ldr	r3, [sp, #0]
     d136:	6820      	ldr	r0, [r4, #0]
     d138:	07db      	lsls	r3, r3, #31
     d13a:	d5db      	bpl.n	d0f4 <am_adc_isr+0x24>
+        uint32_t    ui32NumSamples = 1;
     d13c:	2501      	movs	r5, #1
+        if (AM_HAL_STATUS_SUCCESS != am_hal_adc_samples_read(g_ADCHandle,
     d13e:	ab02      	add	r3, sp, #8
     d140:	aa01      	add	r2, sp, #4
     d142:	2100      	movs	r1, #0
+        uint32_t    ui32NumSamples = 1;
     d144:	9501      	str	r5, [sp, #4]
+        if (AM_HAL_STATUS_SUCCESS != am_hal_adc_samples_read(g_ADCHandle,
     d146:	f000 fc69 	bl	da1c <am_hal_adc_samples_read>
     d14a:	b988      	cbnz	r0, d170 <am_adc_isr+0xa0>
     d14c:	6820      	ldr	r0, [r4, #0]
     d14e:	e7d1      	b.n	d0f4 <am_adc_isr+0x24>
+  {
+    am_util_stdio_printf("Error - return of the ADC instance failed.\n");
     d150:	480d      	ldr	r0, [pc, #52]	; (d188 <am_adc_isr+0xb8>)
     d152:	f7ff ff05 	bl	cf60 <am_util_stdio_printf>
+    am_hal_adc_sw_trigger(g_ADCHandle);
     d156:	6820      	ldr	r0, [r4, #0]
     d158:	f000 fca6 	bl	daa8 <am_hal_adc_sw_trigger>
+}
     d15c:	b005      	add	sp, #20
     d15e:	bd30      	pop	{r4, r5, pc}
+    am_util_stdio_printf("Error - disabling the ADC power domain failed.\n");
     d160:	480a      	ldr	r0, [pc, #40]	; (d18c <am_adc_isr+0xbc>)
     d162:	f7ff fefd 	bl	cf60 <am_util_stdio_printf>
     d166:	e7d0      	b.n	d10a <am_adc_isr+0x3a>
+    am_util_stdio_printf("Error - disable ADC failed.\n");
     d168:	4809      	ldr	r0, [pc, #36]	; (d190 <am_adc_isr+0xc0>)
     d16a:	f7ff fef9 	bl	cf60 <am_util_stdio_printf>
     d16e:	e7c8      	b.n	d102 <am_adc_isr+0x32>
+        am_util_stdio_printf("Error - ADC sample read from FIFO failed.\n");
     d170:	4808      	ldr	r0, [pc, #32]	; (d194 <am_adc_isr+0xc4>)
     d172:	f7ff fef5 	bl	cf60 <am_util_stdio_printf>
     d176:	e7e9      	b.n	d14c <am_adc_isr+0x7c>
@@ -2237,25 +2477,43 @@ am_util_stdio_printf(const char *pcFmt, ...)
     d194:	0000fb98 	.word	0x0000fb98
 
 0000d198 <initADC>:
+{
     d198:	b508      	push	{r3, lr}
+    am_hal_gpio_pinconfig(11, g_AM_PIN_11_ADCSE2);
     d19a:	4b0e      	ldr	r3, [pc, #56]	; (d1d4 <initADC+0x3c>)
     d19c:	200b      	movs	r0, #11
     d19e:	6819      	ldr	r1, [r3, #0]
     d1a0:	f000 feac 	bl	defc <am_hal_gpio_pinconfig>
+{
+    // Start a timer to trigger the ADC periodically. This timer won't actually
+    // be connected to the ADC (as can be done with Timer 3). Instead, we'll
+    // generate interrupts to the CPU, and then use the CPU to trigger the ADC
+    // in the CTIMER interrupt handler.
+    am_hal_ctimer_config_single(0, AM_HAL_CTIMER_TIMERA,
     d1a4:	f44f 7215 	mov.w	r2, #596	; 0x254
     d1a8:	f64f 71ff 	movw	r1, #65535	; 0xffff
     d1ac:	2000      	movs	r0, #0
     d1ae:	f000 fd91 	bl	dcd4 <am_hal_ctimer_config_single>
+                                AM_HAL_CTIMER_LFRC_512HZ |
+                                    AM_HAL_CTIMER_FN_REPEAT |
+                                    AM_HAL_CTIMER_INT_ENABLE);
+    am_hal_ctimer_int_enable(AM_HAL_CTIMER_INT_TIMERA0);
     d1b2:	2001      	movs	r0, #1
     d1b4:	f000 fe4e 	bl	de54 <am_hal_ctimer_int_enable>
+
+    am_hal_ctimer_period_set(0, AM_HAL_CTIMER_TIMERA, ADC_SAMPLE_RATE, 0);
     d1b8:	2300      	movs	r3, #0
     d1ba:	4618      	mov	r0, r3
     d1bc:	2201      	movs	r2, #1
     d1be:	f64f 71ff 	movw	r1, #65535	; 0xffff
     d1c2:	f000 fdf1 	bl	dda8 <am_hal_ctimer_period_set>
+    
+    // Start the timer
+    am_hal_ctimer_start(0, AM_HAL_CTIMER_TIMERA);
     d1c6:	f64f 71ff 	movw	r1, #65535	; 0xffff
     d1ca:	2000      	movs	r0, #0
     d1cc:	f000 fdc2 	bl	dd54 <am_hal_ctimer_start>
+}
     d1d0:	2000      	movs	r0, #0
     d1d2:	bd08      	pop	{r3, pc}
     d1d4:	0000fd00 	.word	0x0000fd00
@@ -2272,72 +2530,135 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
     d1de:	f44f 4280 	mov.w	r2, #16384	; 0x4000
     d1e2:	6019      	str	r1, [r3, #0]
     d1e4:	601a      	str	r2, [r3, #0]
+    am_hal_interrupt_master_enable();
     d1e6:	f001 b847 	b.w	e278 <am_hal_interrupt_master_enable>
     d1ea:	bf00      	nop
     d1ec:	e000e100 	.word	0xe000e100
 
 0000d1f0 <platform_read>:
+ *
+ */
+static int32_t platform_read(void *handle, uint8_t reg, uint8_t *bufp,
+                             uint16_t len)
+{
+    if(len > TF_ACC_MAX_XFER_SIZE){ return 1; } // Error, length too great
     d1f0:	2b80      	cmp	r3, #128	; 0x80
     d1f2:	d83c      	bhi.n	d26e <platform_read+0x7e>
+{
     d1f4:	e92d 43f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, lr}
     d1f8:	4690      	mov	r8, r2
     d1fa:	b08b      	sub	sp, #44	; 0x2c
     d1fc:	460e      	mov	r6, r1
     d1fe:	461f      	mov	r7, r3
+    if(bufp == NULL){ am_util_stdio_printf("No RX buffer provided\n"); return 1; } // Error, no rx buffer provided
     d200:	2a00      	cmp	r2, #0
     d202:	d03e      	beq.n	d282 <platform_read+0x92>
+
+    uint32_t retVal32 = 0;
+
+    am_hal_iom_transfer_t iomTransfer = iomTransferDefault;
     d204:	4d25      	ldr	r5, [pc, #148]	; (d29c <platform_read+0xac>)
+    iomTransfer.ui8Priority = 1;            // ?
+    iomTransfer.ui32PauseCondition = 0;     // ?
+    iomTransfer.ui32StatusSetClr = 0;       // ?
+
+    // Send the first one...
+    retVal32 = am_hal_iom_blocking_transfer(iomHandle, &iomTransfer);
     d206:	f8df 90a4 	ldr.w	r9, [pc, #164]	; d2ac <platform_read+0xbc>
+    am_hal_iom_transfer_t iomTransfer = iomTransferDefault;
     d20a:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
     d20c:	466c      	mov	r4, sp
     d20e:	c40f      	stmia	r4!, {r0, r1, r2, r3}
     d210:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
     d212:	c40f      	stmia	r4!, {r0, r1, r2, r3}
     d214:	e895 0003 	ldmia.w	r5, {r0, r1}
+    iomTransfer.ui32NumBytes = 0;           // No data, just the instruction byte which is the sub-address
     d218:	2300      	movs	r3, #0
+    am_hal_iom_transfer_t iomTransfer = iomTransferDefault;
     d21a:	e884 0003 	stmia.w	r4, {r0, r1}
+    iomTransfer.ui32InstrLen = 1;           // 8-bit transfers
     d21e:	2501      	movs	r5, #1
+    iomTransfer.ui32Instr = (reg | 0x80);   // Offset;
     d220:	f046 0680 	orr.w	r6, r6, #128	; 0x80
+    retVal32 = am_hal_iom_blocking_transfer(iomHandle, &iomTransfer);
     d224:	f8d9 0000 	ldr.w	r0, [r9]
+    iomTransfer.ui32Instr = (reg | 0x80);   // Offset;
     d228:	9602      	str	r6, [sp, #8]
+    retVal32 = am_hal_iom_blocking_transfer(iomHandle, &iomTransfer);
     d22a:	4669      	mov	r1, sp
+    iomTransfer.ui32InstrLen = 1;           // 8-bit transfers
     d22c:	9501      	str	r5, [sp, #4]
+    iomTransfer.bContinue = true;           // Don't release the I2C bus after this one...
     d22e:	f8ad 501c 	strh.w	r5, [sp, #28]
+    iomTransfer.ui8Priority = 1;            // ?
     d232:	f88d 501e 	strb.w	r5, [sp, #30]
+    iomTransfer.ui32NumBytes = 0;           // No data, just the instruction byte which is the sub-address
     d236:	9303      	str	r3, [sp, #12]
+    iomTransfer.eDirection = AM_HAL_IOM_TX;
     d238:	f88d 3010 	strb.w	r3, [sp, #16]
+    iomTransfer.pui32RxBuffer = NULL;
     d23c:	e9cd 3305 	strd	r3, r3, [sp, #20]
+    iomTransfer.ui32StatusSetClr = 0;       // ?
     d240:	e9cd 3308 	strd	r3, r3, [sp, #32]
+    retVal32 = am_hal_iom_blocking_transfer(iomHandle, &iomTransfer);
     d244:	f001 fb7a 	bl	e93c <am_hal_iom_blocking_transfer>
+    if (retVal32 != 0)
     d248:	4604      	mov	r4, r0
     d24a:	b990      	cbnz	r0, d272 <platform_read+0x82>
+    iomTransfer.eDirection = AM_HAL_IOM_RX;
+    iomTransfer.pui32RxBuffer = bufp;       // Link in the RX buffer
+    iomTransfer.ui32NumBytes = len;         // How many bytes to receive
+    iomTransfer.bContinue = false;
+    
+    retVal32 = am_hal_iom_blocking_transfer(iomHandle, &iomTransfer);
     d24c:	4669      	mov	r1, sp
     d24e:	f8d9 0000 	ldr.w	r0, [r9]
+    iomTransfer.bContinue = false;
     d252:	f88d 401c 	strb.w	r4, [sp, #28]
+    iomTransfer.eDirection = AM_HAL_IOM_RX;
     d256:	f88d 5010 	strb.w	r5, [sp, #16]
+    iomTransfer.pui32RxBuffer = bufp;       // Link in the RX buffer
     d25a:	f8cd 8018 	str.w	r8, [sp, #24]
+    iomTransfer.ui32NumBytes = len;         // How many bytes to receive
     d25e:	9703      	str	r7, [sp, #12]
+    retVal32 = am_hal_iom_blocking_transfer(iomHandle, &iomTransfer);
     d260:	f001 fb6c 	bl	e93c <am_hal_iom_blocking_transfer>
+    if (retVal32 != 0)
     d264:	4604      	mov	r4, r0
     d266:	b998      	cbnz	r0, d290 <platform_read+0xa0>
+        am_util_stdio_printf("Receive err: %d\n", retVal32);
+        return retVal32;
+    }
+    
+    return 0;
+}
     d268:	b00b      	add	sp, #44	; 0x2c
     d26a:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
+    if(len > TF_ACC_MAX_XFER_SIZE){ return 1; } // Error, length too great
     d26e:	2001      	movs	r0, #1
+}
     d270:	4770      	bx	lr
+        am_util_stdio_printf("Send err: %d\n", retVal32);
     d272:	4601      	mov	r1, r0
     d274:	480a      	ldr	r0, [pc, #40]	; (d2a0 <platform_read+0xb0>)
     d276:	f7ff fe73 	bl	cf60 <am_util_stdio_printf>
+        return retVal32;
     d27a:	4620      	mov	r0, r4
+}
     d27c:	b00b      	add	sp, #44	; 0x2c
     d27e:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
+    if(bufp == NULL){ am_util_stdio_printf("No RX buffer provided\n"); return 1; } // Error, no rx buffer provided
     d282:	4808      	ldr	r0, [pc, #32]	; (d2a4 <platform_read+0xb4>)
     d284:	f7ff fe6c 	bl	cf60 <am_util_stdio_printf>
     d288:	2001      	movs	r0, #1
+}
     d28a:	b00b      	add	sp, #44	; 0x2c
     d28c:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
+        am_util_stdio_printf("Receive err: %d\n", retVal32);
     d290:	4601      	mov	r1, r0
     d292:	4805      	ldr	r0, [pc, #20]	; (d2a8 <platform_read+0xb8>)
     d294:	f7ff fe64 	bl	cf60 <am_util_stdio_printf>
+        return retVal32;
     d298:	4620      	mov	r0, r4
     d29a:	e7e5      	b.n	d268 <platform_read+0x78>
     d29c:	10001004 	.word	0x10001004
@@ -2347,34 +2668,55 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
     d2ac:	10001508 	.word	0x10001508
 
 0000d2b0 <platform_write>:
+    if(len > TF_ACC_MAX_XFER_SIZE){ return 1; } // Error, length too great
     d2b0:	2b80      	cmp	r3, #128	; 0x80
     d2b2:	d83c      	bhi.n	d32e <platform_write+0x7e>
+{
     d2b4:	b5f0      	push	{r4, r5, r6, r7, lr}
+    am_hal_iom_transfer_t iomTransfer = iomTransferDefault;
     d2b6:	4e25      	ldr	r6, [pc, #148]	; (d34c <platform_write+0x9c>)
+    iomTransfer.pui32TxBuffer = i2cTX;
     d2b8:	4f25      	ldr	r7, [pc, #148]	; (d350 <platform_write+0xa0>)
     d2ba:	468e      	mov	lr, r1
+    am_hal_iom_transfer_t iomTransfer = iomTransferDefault;
     d2bc:	469c      	mov	ip, r3
     d2be:	4614      	mov	r4, r2
     d2c0:	ce0f      	ldmia	r6!, {r0, r1, r2, r3}
+{
     d2c2:	b08b      	sub	sp, #44	; 0x2c
+    am_hal_iom_transfer_t iomTransfer = iomTransferDefault;
     d2c4:	466d      	mov	r5, sp
     d2c6:	c50f      	stmia	r5!, {r0, r1, r2, r3}
     d2c8:	ce0f      	ldmia	r6!, {r0, r1, r2, r3}
     d2ca:	c50f      	stmia	r5!, {r0, r1, r2, r3}
     d2cc:	e896 0003 	ldmia.w	r6, {r0, r1}
+    iomTransfer.ui32Instr = (reg |0x80);    // Sub-address is the one 8-bit instruction
     d2d0:	f04e 0380 	orr.w	r3, lr, #128	; 0x80
+    iomTransfer.pui32RxBuffer = i2cRX;
     d2d4:	f8df e088 	ldr.w	lr, [pc, #136]	; d360 <platform_write+0xb0>
+    iomTransfer.eDirection = AM_HAL_IOM_TX;
     d2d8:	2200      	movs	r2, #0
+    iomTransfer.ui32InstrLen = 1;           // Number of 8-bit transfers for the instruction phase
     d2da:	2601      	movs	r6, #1
+    am_hal_iom_transfer_t iomTransfer = iomTransferDefault;
     d2dc:	e885 0003 	stmia.w	r5, {r0, r1}
+    iomTransfer.ui32NumBytes = len;         // Transfer len bytes of data
     d2e0:	e9cd 3c02 	strd	r3, ip, [sp, #8]
+    iomTransfer.ui32InstrLen = 1;           // Number of 8-bit transfers for the instruction phase
     d2e4:	9601      	str	r6, [sp, #4]
+    iomTransfer.ui8Priority = 1;            // ?
     d2e6:	f88d 601e 	strb.w	r6, [sp, #30]
+    iomTransfer.eDirection = AM_HAL_IOM_TX;
     d2ea:	f88d 2010 	strb.w	r2, [sp, #16]
+    iomTransfer.bContinue = false;          // Do release the bus after this transfer
     d2ee:	f8ad 201c 	strh.w	r2, [sp, #28]
+    iomTransfer.ui32StatusSetClr = 0;       // ?
     d2f2:	e9cd 2208 	strd	r2, r2, [sp, #32]
+    iomTransfer.pui32RxBuffer = i2cRX;
     d2f6:	e9cd 7e05 	strd	r7, lr, [sp, #20]
+    if(bufp == NULL){
     d2fa:	b30c      	cbz	r4, d340 <platform_write+0x90>
+    while(len--){
     d2fc:	f10c 31ff 	add.w	r1, ip, #4294967295
     d300:	b289      	uxth	r1, r1
     d302:	f1bc 0f00 	cmp.w	ip, #0
@@ -2382,28 +2724,40 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
     d308:	1c4b      	adds	r3, r1, #1
     d30a:	18e2      	adds	r2, r4, r3
     d30c:	eb07 0383 	add.w	r3, r7, r3, lsl #2
+        *(i2cTX + len) = *(bufp + len);
     d310:	f812 1d01 	ldrb.w	r1, [r2, #-1]!
     d314:	f843 1d04 	str.w	r1, [r3, #-4]!
+    while(len--){
     d318:	42bb      	cmp	r3, r7
     d31a:	d1f9      	bne.n	d310 <platform_write+0x60>
+    retVal32 = am_hal_iom_blocking_transfer(iomHandle, &iomTransfer);
     d31c:	4b0d      	ldr	r3, [pc, #52]	; (d354 <platform_write+0xa4>)
     d31e:	4669      	mov	r1, sp
     d320:	6818      	ldr	r0, [r3, #0]
     d322:	f001 fb0b 	bl	e93c <am_hal_iom_blocking_transfer>
+    if (retVal32 != 0)
     d326:	4606      	mov	r6, r0
     d328:	b918      	cbnz	r0, d332 <platform_write+0x82>
+}
     d32a:	b00b      	add	sp, #44	; 0x2c
     d32c:	bdf0      	pop	{r4, r5, r6, r7, pc}
+    if(len > TF_ACC_MAX_XFER_SIZE){ return 1; } // Error, length too great
     d32e:	2001      	movs	r0, #1
+}
     d330:	4770      	bx	lr
+        am_util_stdio_printf("Send err (phase 1): %d\n", retVal32);
     d332:	4601      	mov	r1, r0
     d334:	4808      	ldr	r0, [pc, #32]	; (d358 <platform_write+0xa8>)
     d336:	f7ff fe13 	bl	cf60 <am_util_stdio_printf>
+        return retVal32;
     d33a:	4630      	mov	r0, r6
+}
     d33c:	b00b      	add	sp, #44	; 0x2c
     d33e:	bdf0      	pop	{r4, r5, r6, r7, pc}
+        am_util_stdio_printf("No TX buffer provided\n");
     d340:	4806      	ldr	r0, [pc, #24]	; (d35c <platform_write+0xac>)
     d342:	f7ff fe0d 	bl	cf60 <am_util_stdio_printf>
+        return 1; // Error no data to transmit
     d346:	4630      	mov	r0, r6
     d348:	e7ef      	b.n	d32a <platform_write+0x7a>
     d34a:	bf00      	nop
@@ -2415,77 +2769,127 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
     d360:	1000150c 	.word	0x1000150c
 
 0000d364 <initAccelerometer>:
+{
     d364:	b570      	push	{r4, r5, r6, lr}
+        .eInterfaceMode = AM_HAL_IOM_I2C_MODE,
+        .ui32ClockFreq = AM_HAL_IOM_100KHZ
+    };
+
+    // Initialize the IOM.
+    retVal32 = am_hal_iom_initialize(iom, &iomHandle);
     d366:	4b2c      	ldr	r3, [pc, #176]	; (d418 <initAccelerometer+0xb4>)
+    dev_ctx.write_reg = platform_write;
     d368:	4a2c      	ldr	r2, [pc, #176]	; (d41c <initAccelerometer+0xb8>)
+    retVal32 = am_hal_iom_initialize(iom, &iomHandle);
     d36a:	4c2d      	ldr	r4, [pc, #180]	; (d420 <initAccelerometer+0xbc>)
     d36c:	6818      	ldr	r0, [r3, #0]
+    dev_ctx.write_reg = platform_write;
     d36e:	4b2d      	ldr	r3, [pc, #180]	; (d424 <initAccelerometer+0xc0>)
     d370:	6013      	str	r3, [r2, #0]
+{
     d372:	b086      	sub	sp, #24
+    am_hal_iom_config_t i2cConfig =
     d374:	2300      	movs	r3, #0
     d376:	9301      	str	r3, [sp, #4]
+    dev_ctx.read_reg = platform_read;
     d378:	4e2b      	ldr	r6, [pc, #172]	; (d428 <initAccelerometer+0xc4>)
+    am_hal_iom_config_t i2cConfig =
     d37a:	9305      	str	r3, [sp, #20]
     d37c:	e9cd 3303 	strd	r3, r3, [sp, #12]
     d380:	2501      	movs	r5, #1
     d382:	4b2a      	ldr	r3, [pc, #168]	; (d42c <initAccelerometer+0xc8>)
+    dev_ctx.read_reg = platform_read;
     d384:	6056      	str	r6, [r2, #4]
+    retVal32 = am_hal_iom_initialize(iom, &iomHandle);
     d386:	4621      	mov	r1, r4
+    am_hal_iom_config_t i2cConfig =
     d388:	f88d 5004 	strb.w	r5, [sp, #4]
     d38c:	9302      	str	r3, [sp, #8]
+    retVal32 = am_hal_iom_initialize(iom, &iomHandle);
     d38e:	f000 fff7 	bl	e380 <am_hal_iom_initialize>
+    if (retVal32 != AM_HAL_STATUS_SUCCESS) return; // -1;
     d392:	b140      	cbz	r0, d3a6 <initAccelerometer+0x42>
+    lis2dh12_device_id_get(&dev_ctx, &whoamI);
     d394:	4c26      	ldr	r4, [pc, #152]	; (d430 <initAccelerometer+0xcc>)
     d396:	4821      	ldr	r0, [pc, #132]	; (d41c <initAccelerometer+0xb8>)
     d398:	4621      	mov	r1, r4
     d39a:	f000 f94d 	bl	d638 <lis2dh12_device_id_get>
+    if (whoamI != LIS2DH12_ID)
     d39e:	7821      	ldrb	r1, [r4, #0]
     d3a0:	2933      	cmp	r1, #51	; 0x33
     d3a2:	d01b      	beq.n	d3dc <initAccelerometer+0x78>
+        }
     d3a4:	e7fe      	b.n	d3a4 <initAccelerometer+0x40>
+
+    retVal32 = am_hal_iom_power_ctrl(iomHandle, AM_HAL_SYSCTRL_WAKE, false);
     d3a6:	4602      	mov	r2, r0
     d3a8:	4601      	mov	r1, r0
     d3aa:	6820      	ldr	r0, [r4, #0]
     d3ac:	f001 f880 	bl	e4b0 <am_hal_iom_power_ctrl>
+    if (retVal32 != AM_HAL_STATUS_SUCCESS) return; // -2;
     d3b0:	2800      	cmp	r0, #0
     d3b2:	d1ef      	bne.n	d394 <initAccelerometer+0x30>
+    
+    // Set the required configuration settings for the IOM.
+    //
+    retVal32 = am_hal_iom_configure(iomHandle, &i2cConfig);
     d3b4:	a901      	add	r1, sp, #4
     d3b6:	6820      	ldr	r0, [r4, #0]
     d3b8:	f001 f98a 	bl	e6d0 <am_hal_iom_configure>
+    if (retVal32 != AM_HAL_STATUS_SUCCESS) return; // -3;
     d3bc:	2800      	cmp	r0, #0
     d3be:	d1e9      	bne.n	d394 <initAccelerometer+0x30>
+
+    //
+    // Configure the IOM pins.
+    //
+    am_hal_gpio_pinconfig(AM_BSP_I2C_ACCELEROMETER_SDA_PIN,  g_AM_BSP_GPIO_IOM4_SCL); // 39
     d3c0:	4b1c      	ldr	r3, [pc, #112]	; (d434 <initAccelerometer+0xd0>)
     d3c2:	202b      	movs	r0, #43	; 0x2b
     d3c4:	6819      	ldr	r1, [r3, #0]
     d3c6:	f000 fd99 	bl	defc <am_hal_gpio_pinconfig>
+    am_hal_gpio_pinconfig(AM_BSP_I2C_ACCELEROMETER_SCL_PIN,  g_AM_BSP_GPIO_IOM4_SDA); // 40
     d3ca:	4b1b      	ldr	r3, [pc, #108]	; (d438 <initAccelerometer+0xd4>)
     d3cc:	202a      	movs	r0, #42	; 0x2a
     d3ce:	6819      	ldr	r1, [r3, #0]
     d3d0:	f000 fd94 	bl	defc <am_hal_gpio_pinconfig>
+
+    //
+    // Enable the IOM.
+    //
+    retVal32 = am_hal_iom_enable(iomHandle);
     d3d4:	6820      	ldr	r0, [r4, #0]
     d3d6:	f000 fffb 	bl	e3d0 <am_hal_iom_enable>
+    if (retVal32 != AM_HAL_STATUS_SUCCESS) return; // -4;
     d3da:	e7db      	b.n	d394 <initAccelerometer+0x30>
+    am_util_stdio_printf("Whoami (should be 0x33): 0x%2x\n", whoamI);
     d3dc:	4817      	ldr	r0, [pc, #92]	; (d43c <initAccelerometer+0xd8>)
     d3de:	f7ff fdbf 	bl	cf60 <am_util_stdio_printf>
+    lis2dh12_block_data_update_set(&dev_ctx, PROPERTY_ENABLE);
     d3e2:	2101      	movs	r1, #1
     d3e4:	480d      	ldr	r0, [pc, #52]	; (d41c <initAccelerometer+0xb8>)
     d3e6:	f000 f8f3 	bl	d5d0 <lis2dh12_block_data_update_set>
+    lis2dh12_temperature_meas_set(&dev_ctx, LIS2DH12_TEMP_ENABLE);
     d3ea:	2103      	movs	r1, #3
     d3ec:	480b      	ldr	r0, [pc, #44]	; (d41c <initAccelerometer+0xb8>)
     d3ee:	f000 f855 	bl	d49c <lis2dh12_temperature_meas_set>
+    lis2dh12_data_rate_set(&dev_ctx, LIS2DH12_ODR_25Hz);
     d3f2:	2103      	movs	r1, #3
     d3f4:	4809      	ldr	r0, [pc, #36]	; (d41c <initAccelerometer+0xb8>)
     d3f6:	f000 f8b7 	bl	d568 <lis2dh12_data_rate_set>
+    lis2dh12_full_scale_set(&dev_ctx, LIS2DH12_2g);
     d3fa:	2100      	movs	r1, #0
     d3fc:	4807      	ldr	r0, [pc, #28]	; (d41c <initAccelerometer+0xb8>)
     d3fe:	f000 f8cd 	bl	d59c <lis2dh12_full_scale_set>
+    lis2dh12_temperature_meas_set(&dev_ctx, LIS2DH12_TEMP_ENABLE);
     d402:	2103      	movs	r1, #3
     d404:	4805      	ldr	r0, [pc, #20]	; (d41c <initAccelerometer+0xb8>)
     d406:	f000 f849 	bl	d49c <lis2dh12_temperature_meas_set>
+    lis2dh12_operating_mode_set(&dev_ctx, LIS2DH12_HR_12bit);
     d40a:	2100      	movs	r1, #0
     d40c:	4803      	ldr	r0, [pc, #12]	; (d41c <initAccelerometer+0xb8>)
     d40e:	f000 f85f 	bl	d4d0 <lis2dh12_operating_mode_set>
+}
     d412:	2000      	movs	r0, #0
     d414:	b006      	add	sp, #24
     d416:	bd70      	pop	{r4, r5, r6, pc}
@@ -2501,233 +2905,446 @@ __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)
     d43c:	0000fd04 	.word	0x0000fd04
 
 0000d440 <lis2dh12_from_fs2_hr_to_mg>:
+  */
+
+float lis2dh12_from_fs2_hr_to_mg(int16_t lsb)
+{
+  return ( (float)lsb / 16.0f ) * 1.0f;
+}
     d440:	ee00 0a10 	vmov	s0, r0
     d444:	eeba 0ace 	vcvt.f32.s32	s0, s0, #4
     d448:	4770      	bx	lr
     d44a:	bf00      	nop
 
 0000d44c <lis2dh12_from_lsb_hr_to_celsius>:
+  return ( (float)lsb / 16.0f ) * 12.0f;
+}
+
+float lis2dh12_from_lsb_hr_to_celsius(int16_t lsb)
+{
+  return ( ( (float)lsb / 64.0f ) / 4.0f ) + 25.0f;
     d44c:	ee07 0a90 	vmov	s15, r0
     d450:	eefa 7acd 	vcvt.f32.s32	s15, s15, #6
     d454:	eeb5 0a00 	vmov.f32	s0, #80	; 0x3e800000  0.250
     d458:	ee67 7a80 	vmul.f32	s15, s15, s0
     d45c:	eeb3 0a09 	vmov.f32	s0, #57	; 0x41c80000  25.0
+}
     d460:	ee37 0a80 	vadd.f32	s0, s15, s0
     d464:	4770      	bx	lr
     d466:	bf00      	nop
 
 0000d468 <lis2dh12_temp_data_ready_get>:
+  * @param  val      change the values of tda in reg STATUS_REG_AUX
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_temp_data_ready_get(lis2dh12_ctx_t *ctx, uint8_t *val)
+{
     d468:	b530      	push	{r4, r5, lr}
     d46a:	b083      	sub	sp, #12
     d46c:	460c      	mov	r4, r1
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d46e:	e9d0 5001 	ldrd	r5, r0, [r0, #4]
     d472:	2301      	movs	r3, #1
     d474:	aa01      	add	r2, sp, #4
     d476:	2107      	movs	r1, #7
     d478:	47a8      	blx	r5
+  lis2dh12_status_reg_aux_t status_reg_aux;
+  int32_t ret;
+
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_STATUS_REG_AUX,
+                          (uint8_t*)&status_reg_aux, 1);
+  *val = status_reg_aux.tda;
     d47a:	f89d 3004 	ldrb.w	r3, [sp, #4]
     d47e:	f3c3 0380 	ubfx	r3, r3, #2, #1
     d482:	7023      	strb	r3, [r4, #0]
+
+  return ret;
+}
     d484:	b003      	add	sp, #12
     d486:	bd30      	pop	{r4, r5, pc}
 
 0000d488 <lis2dh12_temperature_raw_get>:
+  * @param  buff     buffer that stores data read
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_temperature_raw_get(lis2dh12_ctx_t *ctx, uint8_t *buff)
+{
     d488:	b410      	push	{r4}
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d48a:	e9d0 4001 	ldrd	r4, r0, [r0, #4]
     d48e:	460a      	mov	r2, r1
     d490:	46a4      	mov	ip, r4
     d492:	2302      	movs	r3, #2
     d494:	210c      	movs	r1, #12
+  int32_t ret;
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_OUT_TEMP_L, buff, 2);
+  return ret;
+}
     d496:	f85d 4b04 	ldr.w	r4, [sp], #4
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d49a:	4760      	bx	ip
 
 0000d49c <lis2dh12_temperature_meas_set>:
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_temperature_meas_set(lis2dh12_ctx_t *ctx,
+                                      lis2dh12_temp_en_t val)
+{
     d49c:	b570      	push	{r4, r5, r6, lr}
     d49e:	b082      	sub	sp, #8
     d4a0:	4604      	mov	r4, r0
     d4a2:	460e      	mov	r6, r1
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d4a4:	e9d0 5001 	ldrd	r5, r0, [r0, #4]
     d4a8:	aa01      	add	r2, sp, #4
     d4aa:	2301      	movs	r3, #1
     d4ac:	211f      	movs	r1, #31
     d4ae:	47a8      	blx	r5
+  lis2dh12_temp_cfg_reg_t temp_cfg_reg;
+  int32_t ret;
+
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_TEMP_CFG_REG, (uint8_t*)&temp_cfg_reg, 1);
+
+  if (ret == 0) {
     d4b0:	b958      	cbnz	r0, d4ca <lis2dh12_temperature_meas_set+0x2e>
+    temp_cfg_reg.temp_en = (uint8_t) val;
     d4b2:	f89d 3004 	ldrb.w	r3, [sp, #4]
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d4b6:	6825      	ldr	r5, [r4, #0]
     d4b8:	68a0      	ldr	r0, [r4, #8]
+    temp_cfg_reg.temp_en = (uint8_t) val;
     d4ba:	f366 1387 	bfi	r3, r6, #6, #2
     d4be:	f88d 3004 	strb.w	r3, [sp, #4]
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d4c2:	aa01      	add	r2, sp, #4
     d4c4:	2301      	movs	r3, #1
     d4c6:	211f      	movs	r1, #31
     d4c8:	47a8      	blx	r5
+    ret = lis2dh12_write_reg(ctx, LIS2DH12_TEMP_CFG_REG, (uint8_t*)&temp_cfg_reg, 1);
+  }
+  return ret;
+}
     d4ca:	b002      	add	sp, #8
     d4cc:	bd70      	pop	{r4, r5, r6, pc}
     d4ce:	bf00      	nop
 
 0000d4d0 <lis2dh12_operating_mode_set>:
+  *                  and HR in reg CTRL_REG4
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_operating_mode_set(lis2dh12_ctx_t *ctx, lis2dh12_op_md_t val)
+{
     d4d0:	b570      	push	{r4, r5, r6, lr}
     d4d2:	b082      	sub	sp, #8
     d4d4:	4604      	mov	r4, r0
     d4d6:	460d      	mov	r5, r1
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d4d8:	e9d0 6001 	ldrd	r6, r0, [r0, #4]
     d4dc:	466a      	mov	r2, sp
     d4de:	2301      	movs	r3, #1
     d4e0:	2120      	movs	r1, #32
     d4e2:	47b0      	blx	r6
+  lis2dh12_ctrl_reg4_t ctrl_reg4;
+  int32_t ret;
+
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_CTRL_REG1,
+                          (uint8_t*)&ctrl_reg1, 1);
+  if (ret == 0) {
     d4e4:	bb00      	cbnz	r0, d528 <lis2dh12_operating_mode_set+0x58>
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d4e6:	aa01      	add	r2, sp, #4
     d4e8:	e9d4 6001 	ldrd	r6, r0, [r4, #4]
     d4ec:	2301      	movs	r3, #1
     d4ee:	2123      	movs	r1, #35	; 0x23
     d4f0:	47b0      	blx	r6
+    ret = lis2dh12_read_reg(ctx, LIS2DH12_CTRL_REG4,
+                            (uint8_t*)&ctrl_reg4, 1);
+  } 
+  if (ret == 0) {
     d4f2:	b9c8      	cbnz	r0, d528 <lis2dh12_operating_mode_set+0x58>
+    if ( val == LIS2DH12_HR_12bit ) {
     d4f4:	b9d5      	cbnz	r5, d52c <lis2dh12_operating_mode_set+0x5c>
+      ctrl_reg1.lpen = 0;
     d4f6:	f89d 2000 	ldrb.w	r2, [sp]
+      ctrl_reg4.hr   = 1;
     d4fa:	f89d 3004 	ldrb.w	r3, [sp, #4]
+      ctrl_reg1.lpen = 0;
     d4fe:	f365 02c3 	bfi	r2, r5, #3, #1
+      ctrl_reg4.hr   = 1;
     d502:	f043 0308 	orr.w	r3, r3, #8
+      ctrl_reg1.lpen = 0;
     d506:	f88d 2000 	strb.w	r2, [sp]
+      ctrl_reg4.hr   = 1;
     d50a:	f88d 3004 	strb.w	r3, [sp, #4]
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d50e:	466a      	mov	r2, sp
     d510:	6825      	ldr	r5, [r4, #0]
     d512:	68a0      	ldr	r0, [r4, #8]
     d514:	2301      	movs	r3, #1
     d516:	2120      	movs	r1, #32
     d518:	47a8      	blx	r5
+      ctrl_reg1.lpen = 1;
+      ctrl_reg4.hr   = 0;
+    }
+    ret = lis2dh12_write_reg(ctx, LIS2DH12_CTRL_REG1, (uint8_t*)&ctrl_reg1, 1);
+  } 
+  if (ret == 0) {
     d51a:	b928      	cbnz	r0, d528 <lis2dh12_operating_mode_set+0x58>
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d51c:	aa01      	add	r2, sp, #4
     d51e:	6825      	ldr	r5, [r4, #0]
     d520:	68a0      	ldr	r0, [r4, #8]
     d522:	2301      	movs	r3, #1
     d524:	2123      	movs	r1, #35	; 0x23
     d526:	47a8      	blx	r5
+    ret = lis2dh12_write_reg(ctx, LIS2DH12_CTRL_REG4, (uint8_t*)&ctrl_reg4, 1);
+  }
+  return ret;
+}
     d528:	b002      	add	sp, #8
     d52a:	bd70      	pop	{r4, r5, r6, pc}
+    if (val == LIS2DH12_NM_10bit) {
     d52c:	2d01      	cmp	r5, #1
     d52e:	d10c      	bne.n	d54a <lis2dh12_operating_mode_set+0x7a>
+      ctrl_reg1.lpen = 0;
     d530:	f89d 2000 	ldrb.w	r2, [sp]
+      ctrl_reg4.hr   = 0;
     d534:	f89d 3004 	ldrb.w	r3, [sp, #4]
+      ctrl_reg1.lpen = 0;
     d538:	f360 02c3 	bfi	r2, r0, #3, #1
+      ctrl_reg4.hr   = 0;
     d53c:	f360 03c3 	bfi	r3, r0, #3, #1
+      ctrl_reg1.lpen = 0;
     d540:	f88d 2000 	strb.w	r2, [sp]
+      ctrl_reg4.hr   = 0;
     d544:	f88d 3004 	strb.w	r3, [sp, #4]
+    if (val == LIS2DH12_LP_8bit) {
     d548:	e7e1      	b.n	d50e <lis2dh12_operating_mode_set+0x3e>
     d54a:	2d02      	cmp	r5, #2
     d54c:	d1df      	bne.n	d50e <lis2dh12_operating_mode_set+0x3e>
+      ctrl_reg1.lpen = 1;
     d54e:	f89d 3000 	ldrb.w	r3, [sp]
+      ctrl_reg4.hr   = 0;
     d552:	f89d 2004 	ldrb.w	r2, [sp, #4]
+      ctrl_reg1.lpen = 1;
     d556:	f043 0308 	orr.w	r3, r3, #8
+      ctrl_reg4.hr   = 0;
     d55a:	f360 02c3 	bfi	r2, r0, #3, #1
+      ctrl_reg1.lpen = 1;
     d55e:	f88d 3000 	strb.w	r3, [sp]
+      ctrl_reg4.hr   = 0;
     d562:	f88d 2004 	strb.w	r2, [sp, #4]
     d566:	e7d2      	b.n	d50e <lis2dh12_operating_mode_set+0x3e>
 
 0000d568 <lis2dh12_data_rate_set>:
+  * @param  val      change the values of odr in reg CTRL_REG1
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_data_rate_set(lis2dh12_ctx_t *ctx, lis2dh12_odr_t val)
+{
     d568:	b570      	push	{r4, r5, r6, lr}
     d56a:	b082      	sub	sp, #8
     d56c:	4604      	mov	r4, r0
     d56e:	460e      	mov	r6, r1
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d570:	e9d0 5001 	ldrd	r5, r0, [r0, #4]
     d574:	aa01      	add	r2, sp, #4
     d576:	2301      	movs	r3, #1
     d578:	2120      	movs	r1, #32
     d57a:	47a8      	blx	r5
+  lis2dh12_ctrl_reg1_t ctrl_reg1;
+  int32_t ret;
+
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_CTRL_REG1, (uint8_t*)&ctrl_reg1, 1);
+
+  if (ret == 0) {
     d57c:	b958      	cbnz	r0, d596 <lis2dh12_data_rate_set+0x2e>
+    ctrl_reg1.odr = (uint8_t)val;
     d57e:	f89d 3004 	ldrb.w	r3, [sp, #4]
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d582:	6825      	ldr	r5, [r4, #0]
     d584:	68a0      	ldr	r0, [r4, #8]
+    ctrl_reg1.odr = (uint8_t)val;
     d586:	f366 1307 	bfi	r3, r6, #4, #4
     d58a:	f88d 3004 	strb.w	r3, [sp, #4]
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d58e:	aa01      	add	r2, sp, #4
     d590:	2301      	movs	r3, #1
     d592:	2120      	movs	r1, #32
     d594:	47a8      	blx	r5
+    ret = lis2dh12_write_reg(ctx, LIS2DH12_CTRL_REG1, (uint8_t*)&ctrl_reg1, 1);
+  }
+  return ret;
+}
     d596:	b002      	add	sp, #8
     d598:	bd70      	pop	{r4, r5, r6, pc}
     d59a:	bf00      	nop
 
 0000d59c <lis2dh12_full_scale_set>:
+  * @param  val      change the values of fs in reg CTRL_REG4
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_full_scale_set(lis2dh12_ctx_t *ctx, lis2dh12_fs_t val)
+{
     d59c:	b570      	push	{r4, r5, r6, lr}
     d59e:	b082      	sub	sp, #8
     d5a0:	4604      	mov	r4, r0
     d5a2:	460e      	mov	r6, r1
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d5a4:	e9d0 5001 	ldrd	r5, r0, [r0, #4]
     d5a8:	aa01      	add	r2, sp, #4
     d5aa:	2301      	movs	r3, #1
     d5ac:	2123      	movs	r1, #35	; 0x23
     d5ae:	47a8      	blx	r5
+  lis2dh12_ctrl_reg4_t ctrl_reg4;
+  int32_t ret;
+
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_CTRL_REG4, (uint8_t*)&ctrl_reg4, 1);
+  if (ret == 0) {
     d5b0:	b958      	cbnz	r0, d5ca <lis2dh12_full_scale_set+0x2e>
+    ctrl_reg4.fs = (uint8_t)val;
     d5b2:	f89d 3004 	ldrb.w	r3, [sp, #4]
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d5b6:	6825      	ldr	r5, [r4, #0]
     d5b8:	68a0      	ldr	r0, [r4, #8]
+    ctrl_reg4.fs = (uint8_t)val;
     d5ba:	f366 1305 	bfi	r3, r6, #4, #2
     d5be:	f88d 3004 	strb.w	r3, [sp, #4]
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d5c2:	aa01      	add	r2, sp, #4
     d5c4:	2301      	movs	r3, #1
     d5c6:	2123      	movs	r1, #35	; 0x23
     d5c8:	47a8      	blx	r5
+    ret = lis2dh12_write_reg(ctx, LIS2DH12_CTRL_REG4, (uint8_t*)&ctrl_reg4, 1);
+  }
+  return ret;
+}
     d5ca:	b002      	add	sp, #8
     d5cc:	bd70      	pop	{r4, r5, r6, pc}
     d5ce:	bf00      	nop
 
 0000d5d0 <lis2dh12_block_data_update_set>:
+  * @param  val      change the values of bdu in reg CTRL_REG4
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_block_data_update_set(lis2dh12_ctx_t *ctx, uint8_t val)
+{
     d5d0:	b570      	push	{r4, r5, r6, lr}
     d5d2:	b082      	sub	sp, #8
     d5d4:	4604      	mov	r4, r0
     d5d6:	460e      	mov	r6, r1
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d5d8:	e9d0 5001 	ldrd	r5, r0, [r0, #4]
     d5dc:	aa01      	add	r2, sp, #4
     d5de:	2301      	movs	r3, #1
     d5e0:	2123      	movs	r1, #35	; 0x23
     d5e2:	47a8      	blx	r5
+  lis2dh12_ctrl_reg4_t ctrl_reg4;
+  int32_t ret;
+
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_CTRL_REG4, (uint8_t*)&ctrl_reg4, 1);
+  if (ret == 0) {
     d5e4:	b958      	cbnz	r0, d5fe <lis2dh12_block_data_update_set+0x2e>
+    ctrl_reg4.bdu = val;
     d5e6:	f89d 3004 	ldrb.w	r3, [sp, #4]
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d5ea:	6825      	ldr	r5, [r4, #0]
     d5ec:	68a0      	ldr	r0, [r4, #8]
+    ctrl_reg4.bdu = val;
     d5ee:	f366 13c7 	bfi	r3, r6, #7, #1
     d5f2:	f88d 3004 	strb.w	r3, [sp, #4]
+  ret = ctx->write_reg(ctx->handle, reg, data, len);
     d5f6:	aa01      	add	r2, sp, #4
     d5f8:	2301      	movs	r3, #1
     d5fa:	2123      	movs	r1, #35	; 0x23
     d5fc:	47a8      	blx	r5
+    ret = lis2dh12_write_reg(ctx, LIS2DH12_CTRL_REG4, (uint8_t*)&ctrl_reg4, 1);
+  }
+  return ret;
+}
     d5fe:	b002      	add	sp, #8
     d600:	bd70      	pop	{r4, r5, r6, pc}
     d602:	bf00      	nop
 
 0000d604 <lis2dh12_xl_data_ready_get>:
+  * @param  val      change the values of zyxda in reg STATUS_REG
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_xl_data_ready_get(lis2dh12_ctx_t *ctx, uint8_t *val)
+{
     d604:	b530      	push	{r4, r5, lr}
     d606:	b083      	sub	sp, #12
     d608:	460c      	mov	r4, r1
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d60a:	e9d0 5001 	ldrd	r5, r0, [r0, #4]
     d60e:	2301      	movs	r3, #1
     d610:	aa01      	add	r2, sp, #4
     d612:	2127      	movs	r1, #39	; 0x27
     d614:	47a8      	blx	r5
+  lis2dh12_status_reg_t status_reg;
+  int32_t ret;
+
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_STATUS_REG, (uint8_t*)&status_reg, 1);
+  *val = status_reg.zyxda;
     d616:	f89d 3004 	ldrb.w	r3, [sp, #4]
     d61a:	f3c3 03c0 	ubfx	r3, r3, #3, #1
     d61e:	7023      	strb	r3, [r4, #0]
+
+  return ret;
+}
     d620:	b003      	add	sp, #12
     d622:	bd30      	pop	{r4, r5, pc}
 
 0000d624 <lis2dh12_acceleration_raw_get>:
+  * @param  buff     buffer that stores data read
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_acceleration_raw_get(lis2dh12_ctx_t *ctx, uint8_t *buff)
+{
     d624:	b410      	push	{r4}
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d626:	e9d0 4001 	ldrd	r4, r0, [r0, #4]
     d62a:	460a      	mov	r2, r1
     d62c:	46a4      	mov	ip, r4
     d62e:	2306      	movs	r3, #6
     d630:	2128      	movs	r1, #40	; 0x28
+  int32_t ret;
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_OUT_X_L, buff, 6);
+  return ret;
+}
     d632:	f85d 4b04 	ldr.w	r4, [sp], #4
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d636:	4760      	bx	ip
 
 0000d638 <lis2dh12_device_id_get>:
+  * @param  buff     buffer that stores data read
+  * @retval          interface status (MANDATORY: return 0 -> no Error)
+  *
+  */
+int32_t lis2dh12_device_id_get(lis2dh12_ctx_t *ctx, uint8_t *buff)
+{
     d638:	b410      	push	{r4}
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d63a:	e9d0 4001 	ldrd	r4, r0, [r0, #4]
     d63e:	460a      	mov	r2, r1
     d640:	46a4      	mov	ip, r4
     d642:	2301      	movs	r3, #1
     d644:	210f      	movs	r1, #15
+  int32_t ret;
+  ret = lis2dh12_read_reg(ctx, LIS2DH12_WHO_AM_I, buff, 1);
+  return ret;
+}
     d646:	f85d 4b04 	ldr.w	r4, [sp], #4
+  ret = ctx->read_reg(ctx->handle, reg, data, len);
     d64a:	4760      	bx	ip
 
 0000d64c <am_bsp_uart_string_print>:
