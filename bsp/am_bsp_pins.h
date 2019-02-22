@@ -151,17 +151,17 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_COM_UART_TX;
 #define AM_BSP_GPIO_COM_UART_RX         49
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_COM_UART_RX;
 
-//*****************************************************************************
-//
-//  UART_TX pin: This pin is the COM_UART transmit pin.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_UART_TX             35
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_UART_TX;
+// //*****************************************************************************
+// //
+// //  UART_TX pin: This pin is the UART transmit pin.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_UART_TX             35
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_UART_TX;
 
 //*****************************************************************************
 //
-//  UART_RX pin: This pin is the COM_UART receive pin.
+//  UART_RX pin: This pin is the UART receive pin.
 //
 //*****************************************************************************
 #define AM_BSP_GPIO_UART_RX             36
