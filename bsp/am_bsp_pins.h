@@ -550,54 +550,54 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_MSPI_D7;
 #define AM_BSP_GPIO_MSPI_SCK            24
 extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_MSPI_SCK;
 
-//*****************************************************************************
-//
-//  IOS_CE pin: I/O Slave chip select.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_IOS_CE              3
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_CE;
-#define AM_BSP_IOS_CE_CHNL              0
+// //*****************************************************************************
+// //
+// //  IOS_CE pin: I/O Slave chip select.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_IOS_CE              3
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_CE;
+// #define AM_BSP_IOS_CE_CHNL              0
 
-//*****************************************************************************
-//
-//  IOS_MISO pin: I/O Slave SPI MISO signal.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_IOS_MISO            2
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_MISO;
+// //*****************************************************************************
+// //
+// //  IOS_MISO pin: I/O Slave SPI MISO signal.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_IOS_MISO            2
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_MISO;
 
-//*****************************************************************************
-//
-//  IOS_MOSI pin: I/O Slave SPI MOSI signal.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_IOS_MOSI            1
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_MOSI;
+// //*****************************************************************************
+// //
+// //  IOS_MOSI pin: I/O Slave SPI MOSI signal.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_IOS_MOSI            1
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_MOSI;
 
-//*****************************************************************************
-//
-//  IOS_SCK pin: I/O Slave SPI SCK signal.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_IOS_SCK             0
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_SCK;
+// //*****************************************************************************
+// //
+// //  IOS_SCK pin: I/O Slave SPI SCK signal.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_IOS_SCK             0
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_SCK;
 
-//*****************************************************************************
-//
-//  IOS_SCL pin: I/O Slave I2C clock signal.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_IOS_SCL             0
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_SCL;
+// //*****************************************************************************
+// //
+// //  IOS_SCL pin: I/O Slave I2C clock signal.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_IOS_SCL             0
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_SCL;
 
-//*****************************************************************************
-//
-//  IOS_SDA pin: I/O Slave I2C data signal.
-//
-//*****************************************************************************
-#define AM_BSP_GPIO_IOS_SDA             1
-extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_SDA;
+// //*****************************************************************************
+// //
+// //  IOS_SDA pin: I/O Slave I2C data signal.
+// //
+// //*****************************************************************************
+// #define AM_BSP_GPIO_IOS_SDA             1
+// extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_IOS_SDA;
 
 //*****************************************************************************
 //

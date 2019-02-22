@@ -745,83 +745,83 @@ am_bsp_mspi_pins_disable(am_hal_mspi_device_e eMSPIDevice)
     }
 } // am_bsp_mspi_pins_disable()
 
-//*****************************************************************************
-//
-//! @brief Set up the IOS pins based on mode and module.
-//!
-//! @return None.
-//
-//*****************************************************************************
-void am_bsp_ios_pins_enable(uint32_t ui32Module, uint32_t ui32IOSMode)
-{
-    uint32_t ui32Combined;
+// //*****************************************************************************
+// //
+// //! @brief Set up the IOS pins based on mode and module.
+// //!
+// //! @return None.
+// //
+// //*****************************************************************************
+// void am_bsp_ios_pins_enable(uint32_t ui32Module, uint32_t ui32IOSMode)
+// {
+//     uint32_t ui32Combined;
 
-    //
-    // Validate parameters
-    //
-    if ( ui32Module >= AM_REG_IOSLAVE_NUM_MODULES )
-    {
-        return;
-    }
+//     //
+//     // Validate parameters
+//     //
+//     if ( ui32Module >= AM_REG_IOSLAVE_NUM_MODULES )
+//     {
+//         return;
+//     }
 
-    ui32Combined = ((ui32Module << 2) | ui32IOSMode);
+//     ui32Combined = ((ui32Module << 2) | ui32IOSMode);
 
-    switch ( ui32Combined )
-    {
-        case ((0 << 2) | AM_HAL_IOS_USE_SPI):
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SCK,  g_AM_BSP_GPIO_IOS_SCK);
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_MISO, g_AM_BSP_GPIO_IOS_MISO);
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_MOSI, g_AM_BSP_GPIO_IOS_MOSI);
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_CE,   g_AM_BSP_GPIO_IOS_CE);
-            break;
+//     switch ( ui32Combined )
+//     {
+//         case ((0 << 2) | AM_HAL_IOS_USE_SPI):
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SCK,  g_AM_BSP_GPIO_IOS_SCK);
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_MISO, g_AM_BSP_GPIO_IOS_MISO);
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_MOSI, g_AM_BSP_GPIO_IOS_MOSI);
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_CE,   g_AM_BSP_GPIO_IOS_CE);
+//             break;
 
-        case ((0 << 2) | AM_HAL_IOS_USE_I2C):
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SCL,  g_AM_BSP_GPIO_IOS_SCL);
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SDA,  g_AM_BSP_GPIO_IOS_SDA);
-            break;
-        default:
-            break;
-    }
-} // am_bsp_iom_pins_enable()
+//         case ((0 << 2) | AM_HAL_IOS_USE_I2C):
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SCL,  g_AM_BSP_GPIO_IOS_SCL);
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SDA,  g_AM_BSP_GPIO_IOS_SDA);
+//             break;
+//         default:
+//             break;
+//     }
+// } // am_bsp_iom_pins_enable()
 
-//*****************************************************************************
-//
-//! @brief Disable the IOS pins based on mode and module.
-//!
-//! @return None.
-//
-//*****************************************************************************
-void am_bsp_ios_pins_disable(uint32_t ui32Module, uint32_t ui32IOSMode)
-{
-    uint32_t ui32Combined;
+// //*****************************************************************************
+// //
+// //! @brief Disable the IOS pins based on mode and module.
+// //!
+// //! @return None.
+// //
+// //*****************************************************************************
+// void am_bsp_ios_pins_disable(uint32_t ui32Module, uint32_t ui32IOSMode)
+// {
+//     uint32_t ui32Combined;
 
-    //
-    // Validate parameters
-    //
-    if ( ui32Module >= AM_REG_IOSLAVE_NUM_MODULES )
-    {
-        return;
-    }
+//     //
+//     // Validate parameters
+//     //
+//     if ( ui32Module >= AM_REG_IOSLAVE_NUM_MODULES )
+//     {
+//         return;
+//     }
 
-    ui32Combined = ((ui32Module << 2) | ui32IOSMode);
+//     ui32Combined = ((ui32Module << 2) | ui32IOSMode);
 
-    switch ( ui32Combined )
-    {
-        case ((0 << 2) | AM_HAL_IOS_USE_SPI):
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SCK,  g_AM_HAL_GPIO_DISABLE);
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_MISO, g_AM_HAL_GPIO_DISABLE);
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_MOSI, g_AM_HAL_GPIO_DISABLE);
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_CE,   g_AM_HAL_GPIO_DISABLE);
-            break;
+//     switch ( ui32Combined )
+//     {
+//         case ((0 << 2) | AM_HAL_IOS_USE_SPI):
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SCK,  g_AM_HAL_GPIO_DISABLE);
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_MISO, g_AM_HAL_GPIO_DISABLE);
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_MOSI, g_AM_HAL_GPIO_DISABLE);
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_CE,   g_AM_HAL_GPIO_DISABLE);
+//             break;
 
-        case ((0 << 2) | AM_HAL_IOS_USE_I2C):
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SCL,  g_AM_HAL_GPIO_DISABLE);
-            am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SDA,  g_AM_HAL_GPIO_DISABLE);
-            break;
-        default:
-            break;
-    }
-} // am_bsp_iom_pins_disable()
+//         case ((0 << 2) | AM_HAL_IOS_USE_I2C):
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SCL,  g_AM_HAL_GPIO_DISABLE);
+//             am_hal_gpio_pinconfig(AM_BSP_GPIO_IOS_SDA,  g_AM_HAL_GPIO_DISABLE);
+//             break;
+//         default:
+//             break;
+//     }
+// } // am_bsp_iom_pins_disable()
 
 //*****************************************************************************
 //
