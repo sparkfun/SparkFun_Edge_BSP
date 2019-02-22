@@ -37,9 +37,9 @@
 # This is part of revision v2.0.0 of the AmbiqSuite Development Package.
 #
 #******************************************************************************
-TARGET := adc_lpmode0_dma
+TARGET := example2_dual_mic_dma
 COMPILERNAME := gcc
-PROJECT := adc_lpmode0_dma_gcc
+PROJECT := ${TARGET}_gcc
 CONFIG := bin
 
 SHELL:=/bin/bash

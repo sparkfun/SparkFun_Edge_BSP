@@ -1,5 +1,5 @@
 
-bin/edge_test.axf:     file format elf32-littlearm
+bin/example1_edge_test.axf:     file format elf32-littlearm
 
 
 Disassembly of section .text:
@@ -6948,8 +6948,8 @@ int32_t lis2dh12_device_id_get(lis2dh12_ctx_t *ctx, uint8_t *buff)
     fa90:	20647261 	.word	0x20647261
     fa94:	74736554 	.word	0x74736554
     fa98:	0000000a 	.word	0x0000000a
-    fa9c:	353a3231 	.word	0x353a3231
-    faa0:	30313a37 	.word	0x30313a37
+    fa9c:	303a3331 	.word	0x303a3331
+    faa0:	33313a32 	.word	0x33313a32
     faa4:	00000000 	.word	0x00000000
     faa8:	20626546 	.word	0x20626546
     faac:	32203232 	.word	0x32203232

@@ -42,7 +42,7 @@
 
 # Here are some user modifiable settings. Note that leading spaces are used to separate strings when appending to a variable
 TARGET := SparkFun_Edge_Project_Template# this name is the name of the resulting binary file
-PROJECT := SparkFun_Edge_Project_Template_gcc
+PROJECT := ${TARGET}_gcc
 
 COM_PORT			 = COM4
 SDKPATH				 = # Note that if you copy/paste a windows file path here you need to change backslashes to forward slashes

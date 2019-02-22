@@ -4083,8 +4083,8 @@ am_util_stdio_printf(const char *pcFmt, ...)
     e2e0:	65542074 	.word	0x65542074
     e2e4:	616c706d 	.word	0x616c706d
     e2e8:	000a6574 	.word	0x000a6574
-    e2ec:	353a3231 	.word	0x353a3231
-    e2f0:	30353a34 	.word	0x30353a34
+    e2ec:	303a3331 	.word	0x303a3331
+    e2f0:	34343a31 	.word	0x34343a31
     e2f4:	00000000 	.word	0x00000000
     e2f8:	20626546 	.word	0x20626546
     e2fc:	32203232 	.word	0x32203232

@@ -37,9 +37,9 @@
 # This is part of revision v2.0.0 of the AmbiqSuite Development Package.
 #
 #******************************************************************************
-TARGET := edge_test
+TARGET := example1_edge_test
 COMPILERNAME := gcc
-PROJECT := edge_test_gcc
+PROJECT := ${TARGET}_gcc
 CONFIG := bin
 
 SHELL:=/bin/bash
