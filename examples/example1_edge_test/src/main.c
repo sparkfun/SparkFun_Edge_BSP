@@ -73,11 +73,11 @@ int main(void)
             acceleration_mg[2] =
             lis2dh12_from_fs2_hr_to_mg(data_raw_acceleration.i16bit[2]);
             
-            // am_util_stdio_printf("Acc [mg] %04.2f x, %04.2f y, %04.2f z, Temp [deg C] %04.2f, MIC0 [counts / 2^14] %d\r\n",
-            //         acceleration_mg[0], acceleration_mg[1], acceleration_mg[2], temperature_degC, (audioSample) );
+            am_util_stdio_printf("Acc [mg] %04.2f x, %04.2f y, %04.2f z, Temp [deg C] %04.2f, MIC0 [counts / 2^14] %d\r\n",
+                    acceleration_mg[0], acceleration_mg[1], acceleration_mg[2], temperature_degC, (audioSample) );
 
-            am_util_stdio_printf("%d\r\n",
-                    (audioSample) );
+            // am_util_stdio_printf("%d\r\n",
+            //         (audioSample) );
 
         }
 
