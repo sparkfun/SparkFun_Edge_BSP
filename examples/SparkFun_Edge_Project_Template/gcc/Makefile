@@ -209,7 +209,7 @@ ${SDKPATH}/mcu/apollo3/hal/gcc/bin/libam_hal.a:
 bootload: all
 	${SDKPATH}/tools/apollo3_scripts/create_cust_image_blob.py --bin $(CONFIG)/$(TARGET).bin --load-address 0xC000 --magic-num 0xCB -o $(CONFIG)/main_nonsecure_ota --version 0x0
 	${SDKPATH}/tools/apollo3_scripts/create_cust_wireupdate_blob.py --load-address 0x20000 --bin $(CONFIG)/main_nonsecure_ota.bin -i 6 -o $(CONFIG)/main_nonsecure_wire --options 0x1
-	${BOARDPATH}/bsp/tools/uart_wired_update_sparkfun.py -b 115200 $(SERIAL_PORT) -r 1 -f $(CONFIG)/main_nonsecure_wire.bin -i 6
+	${BOARDPATH}/bsp/tools/uart_wired_update_sparkfun.py -b 921600 $(SERIAL_PORT) -r 1 -f $(CONFIG)/main_nonsecure_wire.bin -i 6
 
 # Automatically include any generated dependencies
 -include $(DEPS)
