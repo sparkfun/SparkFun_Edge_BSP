@@ -938,6 +938,132 @@ const am_hal_gpio_pincfg_t g_AM_BSP_GPIO_SWDIO =
 
 //*****************************************************************************
 //
+//  XCLK pin: OV7670 Camera XCLK output pin.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_CAM_XCLK =
+{
+    .uFuncSel           = AM_HAL_PIN_7_CLKOUT,    // [2:0]   Function select (FUNCSEL)
+    .ePowerSw           = 0,    // [4:3]   Pin is a power switch source (VCC) or sink (VSS)
+    .ePullup            = 0,    // [7:5]   Pin will enable a pullup resistor
+    .eDriveStrength     = AM_HAL_GPIO_PIN_DRIVESTRENGTH_12MA,    // [9:8]   Pad strength designator
+    .eGPOutcfg          = 0,    // [11:10] OUTCFG (GPIO config only)
+    .eGPInput           = 0,    // [12:12] GPIO Input (GPIO config only)
+    .eIntDir            = 0,    // [14:13] Interrupt direction
+    .eGPRdZero          = 0,    // [15:15] GPIO read as zero
+
+    //
+    // The following descriptors designate the chip enable features of the
+    // pin being configured.  If not a CE, these descriptors are ignored.
+    // uIOMnum is 0-5 for the IOMs, or 6 for MSPI, 7 is invalid.
+    //
+    .uIOMnum            = 0,    // [18:16] IOM number (0-5), 6 for MSPI
+    .uNCE               = 0,    // [20:19] NCE number (0-3).
+    .eCEpol             = 0,    // [21:21] NCE polarity.
+    .uRsvd22            = 0,    // [31:22]
+};
+
+//*****************************************************************************
+//
+//  PCLK pin: OV7670 Camera PCLK input pin.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_CAM_PCLK =
+{
+    .uFuncSel			= AM_HAL_PIN_23_GPIO,
+    .eGPOutcfg			= AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput			= AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero			= AM_HAL_GPIO_PIN_RDZERO_READPIN,
+	.eIntDir			= AM_HAL_GPIO_PIN_INTDIR_LO2HI, //AM_HAL_GPIO_PIN_INTDIR_LO2HI
+	// .ePullup			= AM_HAL_GPIO_PIN_PULLUP_WEAK,
+};
+
+//*****************************************************************************
+//
+//  HREF pin: OV7670 Camera HREF input pin.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_CAM_HREF =
+{
+    .uFuncSel			= AM_HAL_PIN_23_GPIO,
+    .eGPOutcfg			= AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput			= AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero			= AM_HAL_GPIO_PIN_RDZERO_READPIN,
+	.eIntDir			= AM_HAL_GPIO_PIN_INTDIR_LO2HI,
+	// .ePullup			= AM_HAL_GPIO_PIN_PULLDOWN,
+};
+
+//*****************************************************************************
+//
+//  VSYNC pin: OV7670 Camera VSYNC input pin.
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t g_AM_BSP_CAM_VSYNC =
+{
+    .uFuncSel			= AM_HAL_PIN_23_GPIO,
+    .eGPOutcfg			= AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput			= AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero			= AM_HAL_GPIO_PIN_RDZERO_READPIN,
+	.eIntDir			= AM_HAL_GPIO_PIN_INTDIR_HI2LO,
+	// .ePullup			= AM_HAL_GPIO_PIN_PULLDOWN,
+};
+
+//*****************************************************************************
+//
+//  CAMDAT pin: OV7670 Camera DATA input pins
+//
+//*****************************************************************************
+const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y0 = {
+    .uFuncSel       = 3,
+    .eGPOutcfg      = AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput       = AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero      = AM_HAL_GPIO_PIN_RDZERO_READPIN
+};
+const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y1 = {
+    .uFuncSel       = 3,
+    .eGPOutcfg      = AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput       = AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero      = AM_HAL_GPIO_PIN_RDZERO_READPIN
+};
+const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y2 = {
+    .uFuncSel       = 3,
+    .eGPOutcfg      = AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput       = AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero      = AM_HAL_GPIO_PIN_RDZERO_READPIN
+};
+const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y3 = {
+    .uFuncSel       = 3,
+    .eGPOutcfg      = AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput       = AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero      = AM_HAL_GPIO_PIN_RDZERO_READPIN
+};
+const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y4 = {
+    .uFuncSel       = 3,
+    .eGPOutcfg      = AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput       = AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero      = AM_HAL_GPIO_PIN_RDZERO_READPIN
+};
+const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y5 = {
+    .uFuncSel       = 3,
+    .eGPOutcfg      = AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput       = AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero      = AM_HAL_GPIO_PIN_RDZERO_READPIN
+};
+const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y6 = {
+    .uFuncSel       = 3,
+    .eGPOutcfg      = AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput       = AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero      = AM_HAL_GPIO_PIN_RDZERO_READPIN
+};
+const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y7 = {
+    .uFuncSel       = 3,
+    .eGPOutcfg      = AM_HAL_GPIO_PIN_OUTCFG_DISABLE,
+    .eGPInput       = AM_HAL_GPIO_PIN_INPUT_ENABLE,
+    .eGPRdZero      = AM_HAL_GPIO_PIN_RDZERO_READPIN
+};
+
+//*****************************************************************************
+//
 // End Doxygen group.
 //! @}
 //

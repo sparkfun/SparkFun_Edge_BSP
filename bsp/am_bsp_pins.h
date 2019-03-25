@@ -628,6 +628,60 @@ extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_SWDIO;
 // extern const am_hal_gpio_pincfg_t       g_AM_BSP_GPIO_FIREBALL_CE;
 // #define AM_BSP_FIREBALL_CE_CHNL         3
 
+//*****************************************************************************
+//
+//  XCLK pin: OV7670 Camera XCLK output pin.
+//
+//*****************************************************************************
+#define AM_BSP_CAM_XCLK                 7
+extern const am_hal_gpio_pincfg_t       g_AM_BSP_CAM_XCLK;
+
+//*****************************************************************************
+//
+//  PCLK pin: OV7670 Camera PCLK input pin.
+//
+//*****************************************************************************
+#define AM_BSP_CAM_PCLK                 23
+extern const am_hal_gpio_pincfg_t       g_AM_BSP_CAM_PCLK;
+
+//*****************************************************************************
+//
+//  HREF pin: OV7670 Camera HREF input pin.
+//
+//*****************************************************************************
+#define AM_BSP_CAM_HREF                 26
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_HREF;
+
+//*****************************************************************************
+//
+//  VSYNC pin: OV7670 Camera VSYNC input pin.
+//
+//*****************************************************************************
+#define AM_BSP_CAM_VSYNC                 12
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_VSYNC;
+
+//*****************************************************************************
+//
+//  CAMDAT pin: OV7670 Camera DATA input pins
+//
+//*****************************************************************************
+#define AM_BSP_CAM_Y0                 	6
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y0;
+#define AM_BSP_CAM_Y1                 	8
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y1;
+#define AM_BSP_CAM_Y2                 	9
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y2;
+#define AM_BSP_CAM_Y3                 	5
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y3;
+#define AM_BSP_CAM_Y4                 	4
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y4;
+#define AM_BSP_CAM_Y5                 	22
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y5;
+#define AM_BSP_CAM_Y6                 	24
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y6;
+#define AM_BSP_CAM_Y7                 	28
+extern const am_hal_gpio_pincfg_t		g_AM_BSP_CAM_Y7;
+
 
 #ifdef __cplusplus
 }
