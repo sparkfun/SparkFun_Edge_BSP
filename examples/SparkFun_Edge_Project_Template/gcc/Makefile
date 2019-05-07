@@ -62,6 +62,7 @@ USER_SOURCE_FILES	+= inc2.c
 
 #### Bootloader Configuration
 SERIAL_PORT ?= ${COM_PORT} # This can be overridden in another file
+ARTEMIS_LOADER_CMD =#for example: "C:\Users\you\~\artemis_uart_loader.exe"
 
 #### Setup ####
 COMPILERNAME := gcc
@@ -206,10 +207,15 @@ ${BOARDPATH}/bsp/gcc/bin/libam_bsp.a:
 ${SDKPATH}/mcu/apollo3/hal/gcc/bin/libam_hal.a:
 	$(MAKE) -C ${SDKPATH}/mcu/apollo3/hal
 
-bootload: all
+wired_update: all
 	${SDKPATH}/tools/apollo3_scripts/create_cust_image_blob.py --bin $(CONFIG)/$(TARGET).bin --load-address 0xC000 --magic-num 0xCB -o $(CONFIG)/main_nonsecure_ota --version 0x0
 	${SDKPATH}/tools/apollo3_scripts/create_cust_wireupdate_blob.py --load-address 0x20000 --bin $(CONFIG)/main_nonsecure_ota.bin -i 6 -o $(CONFIG)/main_nonsecure_wire --options 0x1
+
+bootload: wired_update
 	${BOARDPATH}/bsp/tools/uart_wired_update_sparkfun.py -b 921600 $(SERIAL_PORT) -r 1 -f $(CONFIG)/main_nonsecure_wire.bin -i 6
+
+boot_artemis: wired_update
+	${ARTEMIS_LOADER_CMD} -b 921600 $(SERIAL_PORT) -r 1 -f $(CONFIG)/main_nonsecure_wire.bin -i 6 -v
 
 # Automatically include any generated dependencies
 -include $(DEPS)
