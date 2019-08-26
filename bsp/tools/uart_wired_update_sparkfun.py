@@ -39,6 +39,8 @@ def main():
 
     with serial.Serial(args.port, args.baud, timeout=12) as ser:
         time.sleep(0.25) # delay for 250ms
+        ser.reset_output_buffer()
+        ser.reset_input_buffer()
         connect_device(ser)
 
     print('Done.')
