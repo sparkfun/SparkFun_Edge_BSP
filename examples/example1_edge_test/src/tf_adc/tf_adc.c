@@ -59,6 +59,7 @@ void am_adc_isr(void)
     {
         uint32_t    ui32NumSamples = 1;
         if (AM_HAL_STATUS_SUCCESS != am_hal_adc_samples_read(g_ADCHandle,
+                                                         true,
                                                          NULL,
                                                          &ui32NumSamples,
                                                          &Sample))
